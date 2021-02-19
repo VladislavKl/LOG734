@@ -1,6 +1,8 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include <limits>
+#include <iomanip>
 
 const std::vector<std::string> FILES{"100-5-01.txt","100-5-02.txt", "100-5-03.txt", "100-5-04.txt", "100-5-05.txt",
                                      "250-10-01.txt","250-10-02.txt","250-10-03.txt","250-10-04.txt","250-10-05.txt",
@@ -88,6 +90,18 @@ void getWeight(const int &n, const int &m, std::vector<int>& c,
     }
 }
 
+bool checkSolutionFeasibility(const int&n, const int&m, std::vector<int>& x, std::vector<std::vector<int>>& a,
+                              std::vector<int>& b)  {
+    for (int i = 0; i < m; ++i) {
+        int row_activity = 0;
+        for (int j = 0; j < n; ++j)
+            row_activity += x[j] ? a[i][j] : 0;
+        if (row_activity > b[i])
+            return false;
+    }
+    return true;
+}
+
 //solution
 double constructionHeuristic(const int& n, const int& m, std::vector<int>& x, std::vector<int>& c,
                              std::vector<std::vector<int>>& a, std::vector<int>& b) {
@@ -138,16 +152,17 @@ int main(int argc, char **argv) {
 
             std::vector<int> x(n, -1); //solution, -1 by default means not processed by the algorithm
 
-            std::cout << filename.substr(9) << "\t"
-                      << constructionHeuristic(n, m, x, c, a, b) //solution function
-                      << " milliseconds, objective function value is ";
-
+            double time_taken = constructionHeuristic(n, m, x, c, a, b);
             int objFunctionValue = 0; //value of the objective function with variables included by constructionHeuristic
             for (int i = 0; i < n; ++i) {
                 objFunctionValue += x[i] * c[i];
             }
 
-            std::cout<< objFunctionValue << std::endl;
+            std::cout << filename.substr(9) << "\t"
+                      << std::setw(5) << time_taken << //solution function
+                      "\tmilliseconds,\t objective function value is" << std:: setw(8) << objFunctionValue
+                      << "\t\t" << (checkSolutionFeasibility(n,m,x,a,b) ? "feasible" : "infeasible")
+                      << std::endl;
         }
         else
             std::cout<<"Something went wrong! Check file availability!!!";
