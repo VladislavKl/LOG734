@@ -17,6 +17,7 @@ bool readInstance(std::string &filename, std::vector<int>& c,
     // clear vectors, in case they are being re-occupied: c.clear();
     a.clear();
     b.clear();
+    c.clear();
     // open the file:
     std::ifstream file(filename.c_str());
     if (!file.is_open()) {
