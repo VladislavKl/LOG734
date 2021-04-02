@@ -166,7 +166,7 @@ int main(int argc, char **argv) {
                       << std::endl;
         }
         else
-            std::cout<<"Something went wrong! Check file availability!!!";
+            std::cout<<"Something went wrong! Check file availability!!!\n";
     }
 
     return 0;
