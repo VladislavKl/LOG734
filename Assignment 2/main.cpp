@@ -328,6 +328,15 @@ int main(int argc, char **argv) {
     std::vector<int> c, b;
     std::vector<std::vector<int>> a;
     int n, m, q, opt;
+
+    std::cout << std::setw(13) << "Instance" << std::setw(13) << "Time 1" << std::setw(17) <<
+              "1st sol."  /*<< std::setw(13) << "Check"*/ << std::setw(19) << "Improved sol."<< std::setw(13) <<
+              "Time 2" /*<< std::setw(13) << "Check"*/ << std::setw(14) << "Relative" << std::endl;
+
+    std::cout << std::setprecision(4) << std::fixed;
+
+    double total_rel_improvement = 0.;
+
     for (auto filename: FILES){
         // initialize
         if (readInstance(filename.insert(0,"../Files/"), c, a, b, n, m, q, opt)) {
@@ -346,24 +355,28 @@ int main(int argc, char **argv) {
             bool improvement_made = localSearch(n, m, initial_solution, c, a, b, improved_solution, new_objective,
                                                 localSearchTime,60000, DOUBLE_FLIP, false);
 
+            int init_obj = computeSolutionObjective(n, c, initial_solution);
 
-            std::cout << filename.substr(9) << "\t"
-                      << std::setw(5) << time_taken_to_construct << //solution function
-                      " ms,\t Objective is  " << std:: setw(8) <<
-                      computeSolutionObjective(n, c, initial_solution)
-                      << "\t\t" << (checkSolutionFeasibility(n,m,x,a,b) ? "feasible" : "infeasible");
+            std::cout << std::setw(13) << filename.substr(9) << std::setw(10) << (int)time_taken_to_construct << //solution function
+                      " ms" << std::setw(17) << init_obj /*<< std::setw(13) <<
+                      (checkSolutionFeasibility(n,m,x,a,b) ? "feas" : "infeas")*/;
             if (improvement_made) {
-                std::cout << "\t\t Improvement:" << std::setw(8) << computeSolutionObjective(n, c, improved_solution)
-                          << std::setw(10) << localSearchTime << "\tms\t\t" <<
-                          (checkSolutionFeasibility(n, m, improved_solution, a, b) ? "feasible" : "infeasible") << std::endl;
+                int improved_obj = computeSolutionObjective(n, c, improved_solution);
+                double improvement_rel = 100*(improved_obj - init_obj)/(double)init_obj;
+                total_rel_improvement += improvement_rel;
+                std::cout << std::setw(19) << improved_obj << std::setw(13) << std::setw(10) << (int)localSearchTime
+                << " ms" /*<< std::setw(13) <<  (checkSolutionFeasibility(n, m, improved_solution, a, b)
+                ? "feas" : "infeas")*/ << std::setw(12) <<  improvement_rel  << " %" << std::endl;
             }
             else    {
-                std::cout << "\t\t Improvement not made in " << std::setw(5) << localSearchTime << "\tms\n";
+                std::cout << "\t\t Improvement not made " << localSearchTime << " ms\n";
             }
         }
         else
             std::cout<<"Something went wrong! Check file availability!!!";
     }
+
+    std::cout << "\nAverage relative improvement: " << total_rel_improvement/FILES.size() << " %" << std::endl;
 
     return 0;
 }
