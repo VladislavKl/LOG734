@@ -411,6 +411,7 @@ void GRASP(const int &n, const int &m, std::vector<int>& x, std::vector<int>& c,
         candNumber = ceil(alpha * (n - nassigned));
         createRestrictedCandidateList(n, weight, assigned, candNumber, restrictedCandList);
 
+        srand(13);
         int j = restrictedCandList[rand() % candNumber];
 
         bool isWithinLimits = true; //check if variable is included in objective function, the bounds are not violated
@@ -556,10 +557,12 @@ int main(int argc, char **argv) {
 //            }
 
             int new_objective;
-//            bool improvement_made = localSearch(n, m, initial_solution, c, a, b, improved_solution, new_objective,
-//                                                localSearchTime,60000, DOUBLE_FLIP, false);
+            localSearch(n, m, initial_solution, c, a, b, improved_solution, new_objective,
+                                                localSearchTime,10000, DOUBLE_FLIP, false);
 
+            initial_solution = improved_solution;
             int init_obj = computeSolutionObjective(n, c, initial_solution);
+
 
             std::cout << std::setw(13) << filename.substr(9) << std::setw(10) << (int)time_taken_to_construct << //solution function
                       " ms" << std::setw(17) << init_obj /*<< std::setw(13) <<
