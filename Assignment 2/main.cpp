@@ -357,6 +357,7 @@ int main(int argc, char **argv) {
 
             int init_obj = computeSolutionObjective(n, c, initial_solution);
 
+
             std::cout << std::setw(13) << filename.substr(9) << std::setw(10) << (int)time_taken_to_construct << //solution function
                       " ms" << std::setw(17) << init_obj /*<< std::setw(13) <<
                       (checkSolutionFeasibility(n,m,x,a,b) ? "feas" : "infeas")*/;
