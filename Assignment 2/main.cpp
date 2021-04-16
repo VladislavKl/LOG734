@@ -169,6 +169,50 @@ bool checkSolutionFeasibilityAfterPerturbing(const int&n, const int&m, const Sol
     return true;
 }
 
+/*bool checkSolutionFeasibilityAfterPerturbing_old(const int&n, const int&m, const Solution& x,
+                                             std::vector<std::vector<int>>& a,
+                                             std::vector<int>& b, std::vector<int>& row_activity,
+                                             NEIGHBOURHOOD_OPERATOR N_operator, int first, int second = -1,
+                                             int third = -1, int fourth = -1)  {
+
+    bool direction = x.test(first);
+    bool direction_second = x.test(second); // if we are swapping, go opposite from the first variable
+    bool direction_third = x.test(third);
+    bool direction_fourth = x.test(fourth);
+    switch (N_operator) {
+        case FLIP: {
+            for (int i = 0; i < m; ++i)
+                if ((direction ? row_activity[i] - a[i][first] : row_activity[i] + a[i][first]) > b[i])
+                    return false;
+            break;
+        }
+
+        case DOUBLE_FLIP:
+        case SWAP:  {
+            for (int i = 0; i < m; ++i)
+                if (direction ? row_activity[i] - a[i][first] + (direction_second ? -a[i][second] : a[i][second]) :
+                    row_activity[i] + a[i][first] + (direction_second ? -a[i][second] : a[i][second]) > b[i])
+                    return false;
+            break;
+        }
+
+        case DOUBLE_SWAP:  {
+            for (int i = 0; i < m; ++i) {
+                int act = direction ? row_activity[i] - a[i][first] : row_activity[i] + a[i][first];
+                act = direction_second ? act - a[i][second] : act + a[i][second];
+                act = direction_third ? act - a[i][third] : act + a[i][third];
+                act = direction_fourth ? act - a[i][fourth] : act + a[i][fourth];
+                if (act > b[i])
+                    return false;
+            }
+            break;
+        }
+    }
+
+    return true;
+}*/
+
+
 //solution
 double constructionHeuristic(const int& n, const int& m, std::vector<int>& x, std::vector<int>& c,
                              std::vector<std::vector<int>>& a, std::vector<int>& b) {
@@ -226,7 +270,7 @@ bool explore_swap_neighbourhood(const int &n, const int &m,  int init_objective,
     for (int i = x._Find_first(); i < n; i = x._Find_next(i)) {           // first is one
         int objective_after_first_flip = init_objective - c[i];
         for (int j = 0; j < n; ++j) {
-            if (j == i || x.test(j))            // second should be zero
+            if (x.test(j))            // second should be zero
                 continue;
             if ((current_objective = objective_after_first_flip + c[j]) > neighbour_objective) {
                 if (checkSolutionFeasibilityAfterPerturbing(n, m, x, a, b, row_activity, i, j)) {
@@ -415,13 +459,11 @@ bool yieldNeighbour(const int &n, const int &m,  const Solution& x,
         case DOUBLE_SWAP: {
             for (int i = x._Find_first(); i < n; i = x._Find_next(i)) {
                 for (int j = 0; j < n; ++j) {
-                    if (j == i || x.test(j))            // second should be zero
+                    if (x.test(j))            // second should be zero
                         continue;
-                    for (int k = x._Find_first(); k < n; k = x._Find_next(k)) {
-                        if (k == i)
-                            continue;
-                        for (int l = 0; l < n; ++l) {
-                            if (l == j || x.test(l))            // second should be zero
+                    for (int k = x._Find_next(i); k < n; k = x._Find_next(k)) {
+                        for (int l = j+1; l < n; ++l) {
+                            if (x.test(l))            // second should be zero
                                 continue;
                             if ((current_objective = init_objective - c[i] + c[j] - c[k] + c[l]) > neighbour_objective) {
                                 if (checkSolutionFeasibilityAfterPerturbing(n, m, x, a, b, row_activity, i, j, k, l)) {
@@ -453,6 +495,9 @@ bool yieldNeighbour(const int &n, const int &m,  const Solution& x,
             }
 
             if (N_operator == DOUBLE_SWAP_SWAP) {
+#ifdef DEBUG_INFO
+                printf("Starting additional swap...\n");
+#endif
                 computeSolutionRowActivities(n, m, neighbour, a, b, row_activity);
                 explore_swap_neighbourhood(m, m, neighbour_objective, row_activity, neighbour_found,
                                            neighbour, c, a,
@@ -502,6 +547,7 @@ int main(int argc, char **argv) {
     std::vector<int> c, b;
     std::vector<std::vector<int>> a;
     int n, m, q, opt;
+    bool return_after_first_improvement = false;
 
     NEIGHBOURHOOD_OPERATOR strategy = DOUBLE_FLIP;
 
@@ -533,6 +579,9 @@ int main(int argc, char **argv) {
                     return 404;
                 }
             }
+            else if (!strcmp(argv[i], "-first") ) {
+                return_after_first_improvement = true;
+            }
     }
 
     std::cout << std::setw(13) << "Instance" << std::setw(13) << "Time 1" << std::setw(17) <<
@@ -562,7 +611,7 @@ int main(int argc, char **argv) {
             Solution improved_solution;
             int new_objective;
             bool improvement_made = localSearch(n, m, initial_solution, c, a, b, improved_solution, new_objective,
-                                                localSearchTime,60000, strategy, false);
+                                                localSearchTime,60000, strategy, return_after_first_improvement);
             total_improvement_time += localSearchTime;
             int init_obj = computeSolutionObjective(n, c, initial_solution);
 
