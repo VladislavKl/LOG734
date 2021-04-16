@@ -704,7 +704,7 @@ double metaheuristic(const int &n, const int &m, Solution& x, std::vector<int>& 
         Solution bestSolution;
 
         auto graspStart = clock();
-        while ((clock() - graspStart) / double(CLOCKS_PER_SEC) < 1) {
+        while ((clock() - graspStart) / double(CLOCKS_PER_SEC) < IMPROVEMENT_TIME_LIMIT) {
             GRASP(n, m, solution, c, a, b, alpha);
 
 
