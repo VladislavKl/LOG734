@@ -22,7 +22,6 @@ const std::vector<int> BEST_IMP_SOL_IN_PREV_YEARS{24381, 24274, 23496, 23389, 23
 
 const int MAX_PROBLEM_SIZE = 500;
 typedef std::bitset<MAX_PROBLEM_SIZE> Solution;
-const int TIME_LIMIT = 55;
 
 enum NEIGHBOURHOOD_OPERATOR {
     FLIP,
@@ -690,7 +689,7 @@ void alphaGrasp(const int &n, const int &m, std::vector<int>& x, std::vector<int
 }
 
 double metaheuristic(const int &n, const int &m, Solution& x, std::vector<int>& c,
-                     std::vector<std::vector<int>> &a, std::vector<int>& b) {
+                     std::vector<std::vector<int>> &a, std::vector<int>& b, NEIGHBOURHOOD_OPERATOR N_operator = DOUBLE_SWAP, double alpha = 0.07, int IMPROVEMENT_TIME_LIMIT = 10000, int OVERALL_TIME_LIMIT = 50, bool first_improvement_heuristic = false) {
     clock_t start = clock(); //start time
     std::vector<std::pair<Solution, int>> solutions;
 
@@ -700,13 +699,13 @@ double metaheuristic(const int &n, const int &m, Solution& x, std::vector<int>& 
     int new_objective;
     double localSearchTime;
 
-    while ((clock() - start) / double(CLOCKS_PER_SEC) < TIME_LIMIT) {
+    while ((clock() - start) / double(CLOCKS_PER_SEC) < OVERALL_TIME_LIMIT) {
         int best = 0;
         Solution bestSolution;
 
         auto graspStart = clock();
         while ((clock() - graspStart) / double(CLOCKS_PER_SEC) < 1) {
-            GRASP(n, m, solution, c, a, b, 0.07);
+            GRASP(n, m, solution, c, a, b, alpha);
 
 
             Solution b_solution;
@@ -723,7 +722,7 @@ double metaheuristic(const int &n, const int &m, Solution& x, std::vector<int>& 
         }
 
         localSearch(n, m, bestSolution, c, a, b, improved_solution, new_objective,
-                    localSearchTime,10000, DOUBLE_FLIP, false);
+                    localSearchTime,IMPROVEMENT_TIME_LIMIT, N_operator, first_improvement_heuristic);
 
         solutions.emplace_back(improved_solution, best);
     }
@@ -753,6 +752,9 @@ int main(int argc, char **argv) {
     bool return_after_first_improvement = false;
 
     NEIGHBOURHOOD_OPERATOR strategy = DOUBLE_FLIP;
+    int IMPROVEMENT_TIME_LIMIT = 10000;
+    int OVERALL_TIME_LIMIT = 10;
+    double alpha = 0.07;
 
 #ifdef LOG_TO_FILE
     freopen("log_Improvements.out","a+", stdout);
@@ -861,7 +863,7 @@ int main(int argc, char **argv) {
                       " ms" << std::setw(12) << init_obj << std::setw(13) << comp_init << " %" << std::setw(5) <<
                       (checkSolutionFeasibility(n, m, x, a, b) ? "+" : "-");
 
-            localSearchTime = metaheuristic(n, m, improved_solution, c, a, b);
+            localSearchTime = metaheuristic(n, m, improved_solution, c, a, b, strategy, alpha, IMPROVEMENT_TIME_LIMIT, OVERALL_TIME_LIMIT, return_after_first_improvement);
             int improved_obj = computeSolutionObjective(n, c, improved_solution);
             double improvement_rel = 100 * (improved_obj - init_obj) / (double) init_obj;
             total_rel_improvement += improvement_rel;
@@ -876,7 +878,6 @@ int main(int argc, char **argv) {
                       << " ms" << std::setw(5) << (checkSolutionFeasibility(n, m, improved_solution, a, b)
                                                    ? "+" : "-") << std::setw(12) << improvement_rel << " %"
                       << std::endl;
-
 
         }
         else
