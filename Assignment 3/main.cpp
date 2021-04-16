@@ -19,6 +19,9 @@ const std::vector<int> BEST_INIT_SOL_IN_PREV_YEARS{24285, 24274, 23317, 23102, 2
 const std::vector<int> BEST_IMP_SOL_IN_PREV_YEARS{24381, 24274, 23496, 23389, 23991, 59021, 58629, 57868, 60875,
                                                   57886, 115440, 114246, 116228, 114844, 115928};
 
+const std::vector<int> BEST_META_SOL_IN_PREV_YEARS{24381, 24274, 23676, 23534, 23991, 59139, 58785, 57835, 60896,
+                                                  58008, 115511, 114305, 116228, 114843, 115928};
+
 
 const int MAX_PROBLEM_SIZE = 500;
 typedef std::bitset<MAX_PROBLEM_SIZE> Solution;
@@ -32,6 +35,13 @@ enum NEIGHBOURHOOD_OPERATOR {
     DOUBLE_SWAP_SWAP,
     DOUBLE_FLIP_SWAP,
     SWAP
+};
+
+struct Candidate    {
+    Candidate(): i(-1), weight(0) {}
+    Candidate(int j, double w): i(j), weight(w) {}
+    int i;
+    double weight;
 };
 
 
@@ -525,7 +535,7 @@ bool yieldNeighbour(const int &n, const int &m,  const Solution& x,
 
 bool localSearch(const int &n, const int &m,  Solution& initial_solution, std::vector<int> &c,
                  std::vector<std::vector<int>>& a, std::vector<int>& b, Solution& improved_solution, int& improved_objective,
-                 double& time_taken, double timeLimit = 3.,
+                 double& time_taken, int timeLimit = 30,
                  NEIGHBOURHOOD_OPERATOR N_operator = SWAP,
                  bool first_improvement_heuristic = false) {
 
@@ -538,7 +548,7 @@ bool localSearch(const int &n, const int &m,  Solution& initial_solution, std::v
     {
         starting_point = improved_solution;
         improvement_found = true;
-        if ((clock() - start) / double(CLOCKS_PER_SEC / 1000) > timeLimit)
+        if ((clock() - start) / double(CLOCKS_PER_SEC) > timeLimit)
             break;
     }
 
@@ -563,26 +573,25 @@ double findMax(std::vector<int>& indices, int k, std::vector<double>& weight, do
     return maxIdx;
 }
 
-void createRestrictedCandidateList(const int &n, std::vector<double>& weight, Solution& assigned, int candNumber, std::vector<int>& restrictedCandidateList) {
+
+
+
+void createRestrictedCandidateList(const int &n, std::vector<double>& weight, Solution& assigned, int candNumber,
+                                   std::vector<int>& restrictedCandidateList) {
     assigned.flip();
     int i = assigned._Find_first();
+    std::vector<Candidate> candidate_list(n);
     int k = 0;
-    int maxIdx;
-    double max;
-
-
-    for (; i < n && k < candNumber; i=assigned._Find_next(i)) {
-        restrictedCandidateList[k] = i;
-        ++k;
-    }
-
-    maxIdx = findMax(restrictedCandidateList, candNumber, weight, max);
-
     for (; i < n; i=assigned._Find_next(i)) {
-        if (weight[i] > max) {
-            restrictedCandidateList[maxIdx] = i;
-            maxIdx = findMax(restrictedCandidateList, candNumber, weight, max);
-        }
+        candidate_list[k] = Candidate(i, weight[i]);
+        k++;
+    }
+    std::partial_sort(candidate_list.begin(), candidate_list.begin() + candNumber, candidate_list.begin() + k,
+                      [](Candidate& a, Candidate& b) {return a.weight > b.weight;});
+
+    for (i = 0; i < candNumber; ++i)
+    {
+        restrictedCandidateList[i] = candidate_list.at(i).i;
     }
 
     assigned.flip();
@@ -613,7 +622,7 @@ void weightForGRASP(const int &n, const int &m, std::vector<int>& c,
 }
 
 
-void GRASP(const int &n, const int &m, std::vector<int>& x, std::vector<int>& c,
+void GRASP(const int &n, const int &m, Solution& x, std::vector<int>& c,
            std::vector<std::vector<int>> &a, std::vector<int>& b, double alpha) {
 
     Solution assigned; //1 if we already assigned value for a variable
@@ -647,55 +656,57 @@ void GRASP(const int &n, const int &m, std::vector<int>& x, std::vector<int>& c,
         ++nassigned;
         assigned[j] = true;
         if (isWithinLimits) {
-            x[j] = 1;
+            x.set(j);
             for (int i = 0; i < m; ++i) {
                 occupied[i] += a[i][j];     //space is occupied by variable, as it is added to the objective function
             }
         } else {
-            x[j] = 0; //variable don't suit as it violates the boundaries, thus, not included in the objective function
+            x.reset(j);//variable don't suit as it violates the boundaries, thus, not included in the objective function
         }
 
     }
 }
 
-void alphaGrasp(const int &n, const int &m, std::vector<int>& x, std::vector<int>& c,
-                std::vector<std::vector<int>> &a, std::vector<int>& b, double alpha, int seconds) {
-    auto start = clock();
-
-    long long sum = 0;
-    int count = 0;
-    int best = -1;
-
-
-    while ((clock() - start) / double(CLOCKS_PER_SEC) < seconds) {
-        count++;
-        std::vector<int> solution(n);
-        GRASP(n, m, solution, c, a, b, alpha);
-
-        Solution b_solution;
-        for (int i = 0; i < n; ++i)
-            b_solution.set(i, solution[i] == 1);
-
-        int cost = computeSolutionObjective(n, c, b_solution);
-        sum += cost;
-        if (cost > best) {
-            best = cost;
-            x = solution;
-        }
-    }
-
-    std::cout << alpha << ' ' << best << '\n';
-
-}
+//void alphaGrasp(const int &n, const int &m, std::vector<int>& x, std::vector<int>& c,
+//                std::vector<std::vector<int>> &a, std::vector<int>& b, double alpha, int seconds) {
+//    auto start = clock();
+//
+//    long long sum = 0;
+//    int count = 0;
+//    int best = -1;
+//
+//
+//    while ((clock() - start) / double(CLOCKS_PER_SEC) < seconds) {
+//        count++;
+//        std::vector<int> solution(n);
+//        GRASP(n, m, solution, c, a, b, alpha);
+//
+//        Solution b_solution;
+//        for (int i = 0; i < n; ++i)
+//            b_solution.set(i, solution[i] == 1);
+//
+//        int cost = computeSolutionObjective(n, c, b_solution);
+//        sum += cost;
+//        if (cost > best) {
+//            best = cost;
+//            x = solution;
+//        }
+//    }
+//
+//    std::cout << alpha << ' ' << best << '\n';
+//
+//}
 
 double metaheuristic(const int &n, const int &m, Solution& x, std::vector<int>& c,
-                     std::vector<std::vector<int>> &a, std::vector<int>& b, NEIGHBOURHOOD_OPERATOR N_operator = DOUBLE_SWAP, double alpha = 0.07, int IMPROVEMENT_TIME_LIMIT = 10000, int OVERALL_TIME_LIMIT = 50, bool first_improvement_heuristic = false) {
+                     std::vector<std::vector<int>> &a, std::vector<int>& b, NEIGHBOURHOOD_OPERATOR N_operator = DOUBLE_SWAP,
+                     double alpha = 0.07, int LOCAL_SEARCH_LIMIT = 10000, int GRASP_TIME_LIMIT = 20000, int OVERALL_TIME_LIMIT = 59,
+                     bool first_improvement_heuristic = false) {
     clock_t start = clock(); //start time
     std::vector<std::pair<Solution, int>> solutions;
 
     Solution improved_solution;
 
-    std::vector<int> solution(n);
+    Solution solution(n);
     int new_objective;
     double localSearchTime;
 
@@ -704,25 +715,19 @@ double metaheuristic(const int &n, const int &m, Solution& x, std::vector<int>& 
         Solution bestSolution;
 
         auto graspStart = clock();
-        while ((clock() - graspStart) / double(CLOCKS_PER_SEC) < IMPROVEMENT_TIME_LIMIT) {
+        while ((clock() - graspStart) / double(CLOCKS_PER_SEC) < GRASP_TIME_LIMIT) {
             GRASP(n, m, solution, c, a, b, alpha);
 
-
-            Solution b_solution;
-            for (int i = 0; i < n; ++i)
-                b_solution.set(i, solution[i] == 1);
-
-            int cost = computeSolutionObjective(n, c, b_solution);
-
+            int cost = computeSolutionObjective(n, c, solution);
 
             if (cost > best) {
                 best = cost;
-                bestSolution = b_solution;
+                bestSolution = solution;
             }
         }
 
         localSearch(n, m, bestSolution, c, a, b, improved_solution, new_objective,
-                    localSearchTime,IMPROVEMENT_TIME_LIMIT, N_operator, first_improvement_heuristic);
+                    localSearchTime,LOCAL_SEARCH_LIMIT, N_operator, first_improvement_heuristic);
 
         solutions.emplace_back(improved_solution, best);
     }
@@ -752,8 +757,9 @@ int main(int argc, char **argv) {
     bool return_after_first_improvement = false;
 
     NEIGHBOURHOOD_OPERATOR strategy = DOUBLE_FLIP;
-    int IMPROVEMENT_TIME_LIMIT = 10000;
-    int OVERALL_TIME_LIMIT = 10;
+    int LOCAL_SEARCH_LIMIT = 10;
+    int GRASP_TIME_LIMIT = 20;
+    int OVERALL_TIME_LIMIT = 59;
     double alpha = 0.07;
 
 #ifdef LOG_TO_FILE
@@ -803,6 +809,15 @@ int main(int argc, char **argv) {
                     return 404;
                 }
             }
+            else if (!strcmp(argv[i], "-time")) {
+                OVERALL_TIME_LIMIT = atoi(argv[i + 1]);
+            }
+            else if (!strcmp(argv[i], "-localtime")) {
+                    LOCAL_SEARCH_LIMIT = atoi(argv[i + 1]);
+            }
+            else if (!strcmp(argv[i], "-grasptime")) {
+                    GRASP_TIME_LIMIT = atoi(argv[i + 1]);
+                }
     }
 
 
@@ -863,13 +878,13 @@ int main(int argc, char **argv) {
                       " ms" << std::setw(12) << init_obj << std::setw(13) << comp_init << " %" << std::setw(5) <<
                       (checkSolutionFeasibility(n, m, x, a, b) ? "+" : "-");
 
-            localSearchTime = metaheuristic(n, m, improved_solution, c, a, b, strategy, alpha, IMPROVEMENT_TIME_LIMIT, OVERALL_TIME_LIMIT, return_after_first_improvement);
+            localSearchTime = metaheuristic(n, m, improved_solution, c, a, b, strategy, alpha, LOCAL_SEARCH_LIMIT, GRASP_TIME_LIMIT, OVERALL_TIME_LIMIT, return_after_first_improvement);
             int improved_obj = computeSolutionObjective(n, c, improved_solution);
             double improvement_rel = 100 * (improved_obj - init_obj) / (double) init_obj;
             total_rel_improvement += improvement_rel;
 
-            double comp_imp = 100 * (improved_obj - BEST_IMP_SOL_IN_PREV_YEARS[problem]) /
-                              (double) BEST_IMP_SOL_IN_PREV_YEARS[problem];
+            double comp_imp = 100 * (improved_obj - BEST_META_SOL_IN_PREV_YEARS[problem]) /
+                              (double) BEST_META_SOL_IN_PREV_YEARS[problem];
             total_comp_improvement += comp_imp;
             if (comp_imp > 0)
                 total_best_imp_sols++;
