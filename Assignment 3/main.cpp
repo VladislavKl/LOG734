@@ -22,6 +22,7 @@ const std::vector<int> BEST_IMP_SOL_IN_PREV_YEARS{24381, 24274, 23496, 23389, 23
 
 const int MAX_PROBLEM_SIZE = 500;
 typedef std::bitset<MAX_PROBLEM_SIZE> Solution;
+const int TIME_LIMIT = 55;
 
 enum NEIGHBOURHOOD_OPERATOR {
     FLIP,
@@ -632,6 +633,7 @@ void GRASP(const int &n, const int &m, std::vector<int>& x, std::vector<int>& c,
         candNumber = ceil(alpha * (n - nassigned));
         createRestrictedCandidateList(n, weight, assigned, candNumber, restrictedCandList);
 
+        srand(13);
         int j = restrictedCandList[rand() % candNumber];
 
         bool isWithinLimits = true; //check if variable is included in objective function, the bounds are not violated
@@ -656,25 +658,47 @@ void GRASP(const int &n, const int &m, std::vector<int>& x, std::vector<int>& c,
     }
 }
 
+void alphaGrasp(const int &n, const int &m, std::vector<int>& x, std::vector<int>& c,
+                std::vector<std::vector<int>> &a, std::vector<int>& b, double alpha, int seconds) {
+    auto start = clock();
+
+    long long sum = 0;
+    int count = 0;
+    int best = -1;
+
+
+    while ((clock() - start) / double(CLOCKS_PER_SEC) < seconds) {
+        count++;
+        std::vector<int> solution(n);
+        GRASP(n, m, solution, c, a, b, alpha);
+
+        Solution b_solution;
+        for (int i = 0; i < n; ++i)
+            b_solution.set(i, solution[i] == 1);
+
+        int cost = computeSolutionObjective(n, c, b_solution);
+        sum += cost;
+        if (cost > best) {
+            best = cost;
+            x = solution;
+        }
+    }
+
+    std::cout << alpha << ' ' << best << '\n';
+
+}
 
 double metaheuristic(const int &n, const int &m, Solution& x, std::vector<int>& c,
                      std::vector<std::vector<int>> &a, std::vector<int>& b) {
     clock_t start = clock(); //start time
     std::vector<std::pair<Solution, int>> solutions;
 
-    std::vector<int> solution_improvement(n,-1);
-    //constructionHeuristic(n, m, solution_improvement, c, a, b);
-
-    Solution initial_solution, improved_solution;
-    for (int i = 0; i < n; ++i)
-        initial_solution.set(i, solution_improvement[i] == 1);
-
-    //localSearch(n, m, initial_solution, c, a, b, improved_solution, new_objective,
-    //                                                localSearchTime,60000, DOUBLE_FLIP, false);
-
-    //solutions.push_back(std::pair(initial_solution, computeSolutionObjective(n, c, initial_solution)));
+    Solution improved_solution;
 
     std::vector<int> solution(n);
+    int new_objective;
+    double localSearchTime;
+
     while ((clock() - start) / double(CLOCKS_PER_SEC) < TIME_LIMIT) {
         int best = 0;
         Solution bestSolution;
@@ -697,9 +721,10 @@ double metaheuristic(const int &n, const int &m, Solution& x, std::vector<int>& 
             }
         }
 
-        //localSearch(n, m, initial_solution, c, a, b, improved_solution, new_objective,
-        //                                                localSearchTime,60000, DOUBLE_FLIP, false);
-        solutions.emplace_back(bestSolution, best);
+        localSearch(n, m, bestSolution, c, a, b, improved_solution, new_objective,
+                    localSearchTime,10000, DOUBLE_FLIP, false);
+
+        solutions.emplace_back(improved_solution, best);
     }
 
     int bestcost = -1;
@@ -810,36 +835,48 @@ int main(int argc, char **argv) {
             double localSearchTime;
             Solution improved_solution;
 
+
+//            std::cout<<filename.substr(9)<<std::endl;
+//            for (double alpha = 0.01; alpha <= 0.2; alpha+=0.01){
+//                alphaGrasp(n,m,x,c,a,b,alpha,10);
+//            }
+
             int new_objective;
-//            bool improvement_made = localSearch(n, m, initial_solution, c, a, b, improved_solution, new_objective,
-//                                                localSearchTime,60000, strategy, return_after_first_improvement);
+            bool improvement_made = localSearch(n, m, initial_solution, c, a, b, improved_solution, new_objective,
+                                                localSearchTime, 10000, strategy, return_after_first_improvement);
             total_improvement_time += localSearchTime;
+
+            initial_solution = improved_solution;
             int init_obj = computeSolutionObjective(n, c, initial_solution);
 
-            double comp_init = 100*(init_obj - BEST_INIT_SOL_IN_PREV_YEARS[problem])/(double)BEST_INIT_SOL_IN_PREV_YEARS[problem];
+            double comp_init = 100 * (init_obj - BEST_INIT_SOL_IN_PREV_YEARS[problem]) /
+                               (double) BEST_INIT_SOL_IN_PREV_YEARS[problem];
             total_comp_init += comp_init;
             if (comp_init > 0)
                 total_best_init_sols++;
 
-            std::cout << std::setw(13) << filename.substr(9) << std::setw(10) << (int)time_taken_to_construct << //solution function
-                      " ms" << std::setw(12) << init_obj << std::setw(13) << comp_init  << " %" << std::setw(5) <<
-                      (checkSolutionFeasibility(n,m,x,a,b) ? "+" : "-");
-            if (true) {
-                localSearchTime = metaheuristic(n,m,improved_solution,c,a,b);
-                int improved_obj = computeSolutionObjective(n, c, improved_solution);
-                double improvement_rel = 100*(improved_obj - init_obj)/(double)init_obj;
-                total_rel_improvement += improvement_rel;
-                double comp_imp = 100*(improved_obj - BEST_IMP_SOL_IN_PREV_YEARS[problem])/(double)BEST_IMP_SOL_IN_PREV_YEARS[problem];
-                total_comp_improvement += comp_imp;
-                if (comp_imp > 0)
-                    total_best_imp_sols++;
-                std::cout << std::setw(14) << improved_obj << std::setw(13) << comp_imp  << " %" << std::setw(13) << std::setw(10) << (int)localSearchTime
-                          << " ms" << std::setw(5) <<  (checkSolutionFeasibility(n, m, improved_solution, a, b)
-                                                        ? "+" : "-") << std::setw(12) <<  improvement_rel  << " %" << std::endl;
-            }
-            else {
-                std::cout << "\t\t Improvement not made " << localSearchTime << " ms\n";
-            }
+            std::cout << std::setw(13) << filename.substr(9) << std::setw(10) << (int) time_taken_to_construct
+                      << //solution function
+                      " ms" << std::setw(12) << init_obj << std::setw(13) << comp_init << " %" << std::setw(5) <<
+                      (checkSolutionFeasibility(n, m, x, a, b) ? "+" : "-");
+
+            localSearchTime = metaheuristic(n, m, improved_solution, c, a, b);
+            int improved_obj = computeSolutionObjective(n, c, improved_solution);
+            double improvement_rel = 100 * (improved_obj - init_obj) / (double) init_obj;
+            total_rel_improvement += improvement_rel;
+
+            double comp_imp = 100 * (improved_obj - BEST_IMP_SOL_IN_PREV_YEARS[problem]) /
+                              (double) BEST_IMP_SOL_IN_PREV_YEARS[problem];
+            total_comp_improvement += comp_imp;
+            if (comp_imp > 0)
+                total_best_imp_sols++;
+            std::cout << std::setw(14) << improved_obj << std::setw(13) << comp_imp << " %" << std::setw(13)
+                      << std::setw(10) << (int) localSearchTime
+                      << " ms" << std::setw(5) << (checkSolutionFeasibility(n, m, improved_solution, a, b)
+                                                   ? "+" : "-") << std::setw(12) << improvement_rel << " %"
+                      << std::endl;
+
+
         }
         else
             std::cout<<"Something went wrong! Check file availability!!!";
