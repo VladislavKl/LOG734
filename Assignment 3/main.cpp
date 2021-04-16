@@ -564,27 +564,29 @@ double findMax(std::vector<int>& indices, int k, std::vector<double>& weight, do
     return maxIdx;
 }
 
-void createRestrictedCandidateList(const int &n, std::vector<double>& weight, std::vector<bool>& assigned, int candNumber, std::vector<int>& restrictedCandidateList) {
-    int i = 0;
+void createRestrictedCandidateList(const int &n, std::vector<double>& weight, Solution& assigned, int candNumber, std::vector<int>& restrictedCandidateList) {
+    assigned.flip();
+    int i = assigned._Find_first();
     int k = 0;
     int maxIdx;
     double max;
 
-    for (; i < n && k < candNumber; ++i) {
-        if (!assigned[i]) {
-            restrictedCandidateList[k] = i;
-            ++k;
-        }
+
+    for (; i < n && k < candNumber; i=assigned._Find_next(i)) {
+        restrictedCandidateList[k] = i;
+        ++k;
     }
 
     maxIdx = findMax(restrictedCandidateList, candNumber, weight, max);
 
-    for (; i < n; ++i) {
-        if (!assigned[i]&& weight[i] > max) {
+    for (; i < n; i=assigned._Find_next(i)) {
+        if (weight[i] > max) {
             restrictedCandidateList[maxIdx] = i;
             maxIdx = findMax(restrictedCandidateList, candNumber, weight, max);
         }
     }
+
+    assigned.flip();
 }
 
 void weightForGRASP(const int &n, const int &m, std::vector<int>& c,
@@ -615,12 +617,11 @@ void weightForGRASP(const int &n, const int &m, std::vector<int>& c,
 void GRASP(const int &n, const int &m, std::vector<int>& x, std::vector<int>& c,
            std::vector<std::vector<int>> &a, std::vector<int>& b, double alpha) {
 
-    std::vector<bool> assigned(n); //1 if we already assigned value for a variable
+    Solution assigned; //1 if we already assigned value for a variable
     std::vector<int> occupied(m,0); //the space occupied in each dimension
     std::vector<double> weight(n,0); //weight to choose variable with argmax
     int nassigned = 0; //number of assigned variables
     occupied.clear(); // in case it is not the first call
-    assigned.clear();
     weight.clear();
 
     int candNumber;
