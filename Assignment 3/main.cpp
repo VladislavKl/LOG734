@@ -6,6 +6,7 @@
 #include <iomanip>
 #include <algorithm>
 #include <bitset>
+#include "time.h"
 #include <cmath>
 
 const std::vector<std::string> FILES{"100-5-01.txt","100-5-02.txt", "100-5-03.txt", "100-5-04.txt", "100-5-05.txt",
@@ -642,7 +643,7 @@ void GRASP(const int &n, const int &m, Solution& x, std::vector<int>& c,
         candNumber = ceil(alpha * (n - nassigned));
         createRestrictedCandidateList(n, weight, assigned, candNumber, restrictedCandList);
 
-        srand(13);
+        srand(time(NULL));
         int j = restrictedCandList[rand() % candNumber];
 
         bool isWithinLimits = true; //check if variable is included in objective function, the bounds are not violated
