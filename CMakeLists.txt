@@ -12,3 +12,4 @@ SET(CMAKE_CXX_FLAGS_RELEASE "-O3 -Wall -Wextra")
 
 add_executable(Assignment_1 Assignment\ 1/main.cpp)
 add_executable(Assignment_2 Assignment\ 2/main.cpp)
+add_executable(Assignment_3 Assignment\ 3/main.cpp)
