@@ -803,7 +803,7 @@ int main(int argc, char **argv) {
                     return_after_first_improvement = true;
                 }
                 else if (!strcmp(argv[i + 1], "false")) {
-                    return_after_first_improvement = true;
+                    return_after_first_improvement = false;
                 }
                 else {
                     std::cerr << "Wrong argument on first improvement! Use either 'true' or 'false'\nExiting...\n";
@@ -831,7 +831,7 @@ int main(int argc, char **argv) {
 
     double total_rel_improvement = 0.;
     int total_construction_time = 0;
-    int total_improvement_time = 0;
+    int total_meta_time = 0;
     int total_best_init_sols = 0;
     int total_best_imp_sols = 0;
     double total_comp_improvement = 0.;
@@ -852,7 +852,7 @@ int main(int argc, char **argv) {
                 initial_solution.set(i, x[i] == 1);
 
             double localSearchTime;
-            Solution improved_solution;
+//            Solution improved_solution;
 
 
 //            std::cout<<filename.substr(9)<<std::endl;
@@ -860,12 +860,12 @@ int main(int argc, char **argv) {
 //                alphaGrasp(n,m,x,c,a,b,alpha,10);
 //            }
 
-            int new_objective;
-            bool improvement_made = localSearch(n, m, initial_solution, c, a, b, improved_solution, new_objective,
-                                                localSearchTime, 10000, strategy, return_after_first_improvement);
-            total_improvement_time += localSearchTime;
-
-            initial_solution = improved_solution;
+//            int new_objective;
+//            bool improvement_made = localSearch(n, m, initial_solution, c, a, b, improved_solution, new_objective,
+//                                                localSearchTime, 10000, strategy, return_after_first_improvement);
+//
+//
+//            initial_solution = improved_solution;
             int init_obj = computeSolutionObjective(n, c, initial_solution);
 
             double comp_init = 100 * (init_obj - BEST_INIT_SOL_IN_PREV_YEARS[problem]) /
@@ -879,8 +879,9 @@ int main(int argc, char **argv) {
                       " ms" << std::setw(12) << init_obj << std::setw(13) << comp_init << " %" << std::setw(5) <<
                       (checkSolutionFeasibility(n, m, x, a, b) ? "+" : "-");
 
-            localSearchTime = metaheuristic(n, m, improved_solution, c, a, b, strategy, alpha, LOCAL_SEARCH_LIMIT, GRASP_TIME_LIMIT, OVERALL_TIME_LIMIT, return_after_first_improvement);
-            int improved_obj = computeSolutionObjective(n, c, improved_solution);
+            localSearchTime = metaheuristic(n, m, initial_solution, c, a, b, strategy, alpha, LOCAL_SEARCH_LIMIT, GRASP_TIME_LIMIT, OVERALL_TIME_LIMIT, return_after_first_improvement);
+            total_meta_time += localSearchTime;
+            int improved_obj = computeSolutionObjective(n, c, initial_solution);
             double improvement_rel = 100 * (improved_obj - init_obj) / (double) init_obj;
             total_rel_improvement += improvement_rel;
 
@@ -891,7 +892,7 @@ int main(int argc, char **argv) {
                 total_best_imp_sols++;
             std::cout << std::setw(14) << improved_obj << std::setw(13) << comp_imp << " %" << std::setw(13)
                       << std::setw(10) << (int) localSearchTime
-                      << " ms" << std::setw(5) << (checkSolutionFeasibility(n, m, improved_solution, a, b)
+                      << " ms" << std::setw(5) << (checkSolutionFeasibility(n, m, initial_solution, a, b)
                                                    ? "+" : "-") << std::setw(12) << improvement_rel << " %"
                       << std::endl;
 
@@ -904,7 +905,7 @@ int main(int argc, char **argv) {
 
     printf("\nAverage relative improvement: %8.4f \%\n", total_rel_improvement/FILES.size());
     printf("Total time for construction: %5d ms\n", total_construction_time);
-    printf("Total time for improvement:  %5d ms\n", total_improvement_time);
+    printf("Total time for improvement:  %5d ms\n", total_meta_time);
 
     printf("\nComparison with previous years:\n");
     printf("Best initial solutions:  %5d\tAverage improvement: %14.6f \%\n", total_best_init_sols, total_comp_init/(FILES.size()));
