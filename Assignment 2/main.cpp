@@ -1,13 +1,18 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include <cstring>
 #include <limits>
 #include <iomanip>
+#include <algorithm>
 #include <bitset>
 
 const std::vector<std::string> FILES{"100-5-01.txt","100-5-02.txt", "100-5-03.txt", "100-5-04.txt", "100-5-05.txt",
                                      "250-10-01.txt","250-10-02.txt","250-10-03.txt","250-10-04.txt","250-10-05.txt",
                                      "500-30-01.txt","500-30-02.txt","500-30-03.txt","500-30-04.txt","500-30-05.txt"
+};
+
+const std::vector<int> BEST_IMP_SOL_IN_PREV_YEARS{1,2,3,
 };
 
 const int MAX_PROBLEM_SIZE = 500;
@@ -16,8 +21,14 @@ typedef std::bitset<MAX_PROBLEM_SIZE> Solution;
 enum NEIGHBOURHOOD_OPERATOR {
     FLIP,
     DOUBLE_FLIP,
+    TRIPLE_FLIP,
+    QUAD_FLIP,
+    DOUBLE_SWAP,
+    DOUBLE_SWAP_SWAP,
+    DOUBLE_FLIP_SWAP,
     SWAP
 };
+
 
 //read function from lectures
 bool readInstance(std::string &filename, std::vector<int>& c,
@@ -135,15 +146,39 @@ bool checkSolutionFeasibility(const int&n, const int&m, const Solution& x, std::
     return true;
 }
 
+inline int compute_flip_direction(const Solution&x, int i) {
+    return (i < 0) ? 0 : (x.test(i) ? -1 : 1);
+}
+
 
 
 bool checkSolutionFeasibilityAfterPerturbing(const int&n, const int&m, const Solution& x,
                                              std::vector<std::vector<int>>& a,
+                                             std::vector<int>& b, std::vector<int>& row_activity, int first,
+                                             int second = -1, int third = -1, int fourth = -1)  {
+
+    int dir_1 = compute_flip_direction(x, first);
+    int dir_2 = compute_flip_direction(x, second);
+    int dir_3 = compute_flip_direction(x, third);
+    int dir_4 = compute_flip_direction(x, fourth);
+    for (int i = 0; i < m; ++i)
+        if ((row_activity[i] + a[i][first]*dir_1 + ((second < 0) ? 0 : a[i][second])*dir_2
+                                                + ((third < 0) ? 0 : a[i][third])*dir_3
+                                                  + ((fourth < 0) ? 0 : a[i][fourth])*dir_4) > b[i])
+            return false;
+    return true;
+}
+
+/*bool checkSolutionFeasibilityAfterPerturbing_old(const int&n, const int&m, const Solution& x,
+                                             std::vector<std::vector<int>>& a,
                                              std::vector<int>& b, std::vector<int>& row_activity,
-                                             NEIGHBOURHOOD_OPERATOR N_operator, int first, int second = -1)  {
+                                             NEIGHBOURHOOD_OPERATOR N_operator, int first, int second = -1,
+                                             int third = -1, int fourth = -1)  {
 
     bool direction = x.test(first);
-    bool direction_second = (N_operator == DOUBLE_FLIP) ? x.test(second) : !direction; // if we are swapping, go opposite from the first variable
+    bool direction_second = x.test(second); // if we are swapping, go opposite from the first variable
+    bool direction_third = x.test(third);
+    bool direction_fourth = x.test(fourth);
     switch (N_operator) {
         case FLIP: {
             for (int i = 0; i < m; ++i)
@@ -156,14 +191,27 @@ bool checkSolutionFeasibilityAfterPerturbing(const int&n, const int&m, const Sol
         case SWAP:  {
             for (int i = 0; i < m; ++i)
                 if (direction ? row_activity[i] - a[i][first] + (direction_second ? -a[i][second] : a[i][second]) :
-                     row_activity[i] + a[i][first] + (direction_second ? -a[i][second] : a[i][second]) > b[i])
+                    row_activity[i] + a[i][first] + (direction_second ? -a[i][second] : a[i][second]) > b[i])
                     return false;
+            break;
+        }
+
+        case DOUBLE_SWAP:  {
+            for (int i = 0; i < m; ++i) {
+                int act = direction ? row_activity[i] - a[i][first] : row_activity[i] + a[i][first];
+                act = direction_second ? act - a[i][second] : act + a[i][second];
+                act = direction_third ? act - a[i][third] : act + a[i][third];
+                act = direction_fourth ? act - a[i][fourth] : act + a[i][fourth];
+                if (act > b[i])
+                    return false;
+            }
             break;
         }
     }
 
     return true;
-}
+}*/
+
 
 //solution
 double constructionHeuristic(const int& n, const int& m, std::vector<int>& x, std::vector<int>& c,
@@ -212,12 +260,53 @@ int computeSolutionObjective(const int &n, const std::vector<int>&c, const Solut
     return objectiveValue;
 }
 
+bool explore_swap_neighbourhood(const int &n, const int &m,  int init_objective, std::vector<int>& row_activity,
+                                bool& neighbour_found, const Solution& x,
+                                std::vector<int> &c, std::vector<std::vector<int>>& a,
+                                std::vector<int>& b,
+                                Solution& neighbour, int& neighbour_objective,
+                                bool return_after_first_improvement = false)   {
+    int current_objective;
+    for (int i = x._Find_first(); i < n; i = x._Find_next(i)) {           // first is one
+        int objective_after_first_flip = init_objective - c[i];
+        for (int j = 0; j < n; ++j) {
+            if (x.test(j))            // second should be zero
+                continue;
+            if ((current_objective = objective_after_first_flip + c[j]) > neighbour_objective) {
+                if (checkSolutionFeasibilityAfterPerturbing(n, m, x, a, b, row_activity, i, j)) {
+                    neighbour = x;
+#ifdef DEBUG_INFO
+                    printf("Improvement: swap %d: %d and %d: %d \t-- feasible\n", i, x.test(i), j, x.test(j));
+#endif
+                    neighbour.flip(i);
+                    neighbour.flip(j);
+                    neighbour_found = true;
+                    neighbour_objective = current_objective;
+                    if (return_after_first_improvement)
+                        return true;
+                }
+#ifdef DEBUG_INFO
+                //                        else
+//                            printf("Possible improvement: swap %d: %d and %d: %d \t-- infeasible\n", i, x.test(i), j, x.test(j));
+#endif
+            }
+        }
+    }
+    return false;
+}
+
+
+
+
 bool yieldNeighbour(const int &n, const int &m,  const Solution& x,
                                                   std::vector<int> &c, std::vector<std::vector<int>>& a,
                                                   std::vector<int>& b, NEIGHBOURHOOD_OPERATOR N_operator,
                                                   Solution& neighbour, int& neighbour_objective,
                                                   bool return_after_first_improvement = false)
 {
+#ifdef DEBUG_INFO
+    freopen("log.out","a+", stdout);
+#endif
     bool neighbour_found = false;
 
     int init_objective = computeSolutionObjective(n, c, x);
@@ -232,7 +321,7 @@ bool yieldNeighbour(const int &n, const int &m,  const Solution& x,
         case FLIP: {
             for (int i = 0; i < n; ++i) {
                 if ((current_objective = x.test(i) ? init_objective - c[i] : init_objective + c[i]) > neighbour_objective) {
-                    if (checkSolutionFeasibilityAfterPerturbing(n, m, x, a, b, row_activity, FLIP, i)) {
+                    if (checkSolutionFeasibilityAfterPerturbing(n, m, x, a, b, row_activity, i)) {
                         neighbour = x;
                         neighbour.flip(i);
                         neighbour_found = true;
@@ -245,23 +334,112 @@ bool yieldNeighbour(const int &n, const int &m,  const Solution& x,
             break;
         }
 
+        case DOUBLE_FLIP_SWAP:
         case DOUBLE_FLIP: {
 
             for (int i = 0; i < n; ++i) {
                 int objective_after_first_flip = x.test(i) ? init_objective - c[i] : init_objective + c[i];
-                for (int j = 0; j < n; ++j) {
-                    if (j == i)
-                        continue;
+                for (int j = i + 1; j < n; ++j) {
                     if ((current_objective = x.test(j) ? objective_after_first_flip - c[j] :
                                              objective_after_first_flip + c[j]) > neighbour_objective) {
-                        if (checkSolutionFeasibilityAfterPerturbing(n, m, x, a, b, row_activity, DOUBLE_FLIP, i, j)) {
+                        if (checkSolutionFeasibilityAfterPerturbing(n, m, x, a, b, row_activity, i, j)) {
                             neighbour = x;
+#ifdef DEBUG_INFO
+                            printf("Improvement: double-flip %d: %d and %d: %d \t-- feasible\n", i, x.test(i), j, x.test(j));
+#endif
                             neighbour.flip(i);
                             neighbour.flip(j);
                             neighbour_found = true;
                             neighbour_objective = current_objective;
                             if (return_after_first_improvement)
                                 return true;
+                        }
+#ifdef DEBUG_INFO
+//                        else
+//                            printf("Possible improvement: double-flip %d: %d and %d: %d \t-- infeasible\n", i, x.test(i), j, x.test(j));
+#endif
+                    }
+                }
+            }
+            if (N_operator == DOUBLE_FLIP_SWAP) {
+                computeSolutionRowActivities(n, m, neighbour, a, b, row_activity);
+                explore_swap_neighbourhood(m, m, neighbour_objective, row_activity, neighbour_found,
+                                           neighbour, c, a,
+                                           b, neighbour,
+                                           neighbour_objective, return_after_first_improvement);
+
+            }
+            break;
+        }
+
+        case TRIPLE_FLIP: {
+
+            for (int i = 0; i < n; ++i) {
+                int objective_after_first_flip = x.test(i) ? init_objective - c[i] : init_objective + c[i];
+                for (int j = i + 1; j < n; ++j) {
+                    int objective_after_second_flip = x.test(j) ? objective_after_first_flip - c[j] : objective_after_first_flip + c[j];
+                    for (int k = j + 1; k < n; ++k) {
+                        if ((current_objective = x.test(k) ? objective_after_second_flip - c[k] :
+                                                 objective_after_second_flip + c[k]) > neighbour_objective) {
+                            if (checkSolutionFeasibilityAfterPerturbing(n, m, x, a, b, row_activity, i,
+                                                                        j, k)) {
+                                neighbour = x;
+#ifdef DEBUG_INFO
+                                printf("Improvement: triple-flip %d: %d and %d: %d \t-- feasible\n", i,
+                                       x.test(i), j, x.test(j));
+#endif
+                                neighbour.flip(i);
+                                neighbour.flip(j);
+                                neighbour.flip(k);
+                                neighbour_found = true;
+                                neighbour_objective = current_objective;
+                                if (return_after_first_improvement)
+                                    return true;
+                            }
+#ifdef DEBUG_INFO
+//                        else
+//                            printf("Possible improvement: double-flip %d: %d and %d: %d \t-- infeasible\n", i, x.test(i), j, x.test(j));
+#endif
+                        }
+                    }
+                }
+            }
+            break;
+        }
+
+        case QUAD_FLIP: {
+
+            for (int i = 0; i < n; ++i) {
+                int objective_after_first_flip = x.test(i) ? init_objective - c[i] : init_objective + c[i];
+                for (int j = i + 1; j < n; ++j) {
+                    int objective_after_second_flip = x.test(j) ? objective_after_first_flip - c[j] : objective_after_first_flip + c[j];
+                    for (int k = j + 1; k < n; ++k) {
+                        int objective_after_third_flip = x.test(k) ? objective_after_second_flip - c[k] :
+                                                         objective_after_second_flip + c[k];
+                        for (int l = k + 1; l < n; ++l) {
+                            if ((current_objective = x.test(l) ? objective_after_third_flip - c[l] :
+                                                     objective_after_third_flip + c[l]) > neighbour_objective) {
+                                if (checkSolutionFeasibilityAfterPerturbing(n, m, x, a, b, row_activity, i,
+                                                                            j, k, l)) {
+                                    neighbour = x;
+#ifdef DEBUG_INFO
+                                    printf("Improvement: quad-flip %d: %d and %d: %d \t-- feasible\n", i,
+                                           x.test(i), j, x.test(j));
+#endif
+                                    neighbour.flip(i);
+                                    neighbour.flip(j);
+                                    neighbour.flip(k);
+                                    neighbour.flip(l);
+                                    neighbour_found = true;
+                                    neighbour_objective = current_objective;
+                                    if (return_after_first_improvement)
+                                        return true;
+                                }
+#ifdef DEBUG_INFO
+                                //                        else
+    //                            printf("Possible improvement: double-flip %d: %d and %d: %d \t-- infeasible\n", i, x.test(i), j, x.test(j));
+#endif
+                            }
                         }
                     }
                 }
@@ -270,27 +448,68 @@ bool yieldNeighbour(const int &n, const int &m,  const Solution& x,
         }
 
         case SWAP: {
-            for (int i = x._Find_first(); i < n; i = x._Find_next(i)) {           // first is one
-                int objective_after_first_flip = init_objective - c[i];
+            explore_swap_neighbourhood(m, m, init_objective, row_activity, neighbour_found, x, c, a,
+                                       b, neighbour,
+                                       neighbour_objective, return_after_first_improvement);
+            break;
+
+        }
+
+        case DOUBLE_SWAP_SWAP:
+        case DOUBLE_SWAP: {
+            for (int i = x._Find_first(); i < n; i = x._Find_next(i)) {
                 for (int j = 0; j < n; ++j) {
-                    if (j == i || x.test(j))            // second is zero
+                    if (x.test(j))            // second should be zero
                         continue;
-                    if ((current_objective = objective_after_first_flip + c[j]) > neighbour_objective) {
-                        if (checkSolutionFeasibilityAfterPerturbing(n, m, x, a, b, row_activity, SWAP, i, j)) {
-                            neighbour = x;
-                            neighbour.flip(i);
-                            neighbour.flip(j);
-                            neighbour_found = true;
-                            neighbour_objective = current_objective;
-                            if (return_after_first_improvement)
-                                return true;
+                    for (int k = x._Find_next(i); k < n; k = x._Find_next(k)) {
+                        for (int l = j+1; l < n; ++l) {
+                            if (x.test(l))            // second should be zero
+                                continue;
+                            if ((current_objective = init_objective - c[i] + c[j] - c[k] + c[l]) > neighbour_objective) {
+                                if (checkSolutionFeasibilityAfterPerturbing(n, m, x, a, b, row_activity, i, j, k, l)) {
+                                    neighbour = x;
+#ifdef DEBUG_INFO
+                                    printf("Improvement: double_swap %d: %d and %d: %d \t-- feasible\n", i, x.test(i), j, x.test(j));
+#endif
+                                    neighbour.flip(i);
+                                    neighbour.flip(j);
+                                    neighbour.flip(k);
+                                    neighbour.flip(l);
+                                    neighbour_found = true;
+                                    neighbour_objective = current_objective;
+                                    if (return_after_first_improvement)
+                                        return true;
+                                }
+#ifdef DEBUG_INFO
+                                //                        else
+//                            printf("Possible improvement: swap %d: %d and %d: %d \t-- infeasible\n", i, x.test(i), j, x.test(j));
+#endif
+                            }
+
+
                         }
                     }
                 }
+
+
+            }
+
+            if (N_operator == DOUBLE_SWAP_SWAP) {
+#ifdef DEBUG_INFO
+                printf("Starting additional swap...\n");
+#endif
+                computeSolutionRowActivities(n, m, neighbour, a, b, row_activity);
+                explore_swap_neighbourhood(m, m, neighbour_objective, row_activity, neighbour_found,
+                                           neighbour, c, a,
+                                           b, neighbour,
+                                           neighbour_objective, return_after_first_improvement);
+
             }
             break;
 
         }
+
+
     }
 
 
@@ -328,14 +547,52 @@ int main(int argc, char **argv) {
     std::vector<int> c, b;
     std::vector<std::vector<int>> a;
     int n, m, q, opt;
+    bool return_after_first_improvement = false;
+
+    NEIGHBOURHOOD_OPERATOR strategy = DOUBLE_FLIP;
+
+#ifdef DEBUG_INFO
+    freopen("log.out","w", stdout);
+#endif
+
+    if (argc > 1)   {
+        for (int i = 1; i < argc - 1; ++i)
+            if (!strcmp(argv[i], "-strategy") ) {
+                if (!strcmp(argv[i + 1], "FLIP")) {
+                    strategy = FLIP;
+                } else if (!strcmp(argv[i + 1], "DOUBLE_FLIP")) {
+                    strategy = DOUBLE_FLIP;
+                } else if (!strcmp(argv[i + 1], "SWAP")) {
+                    strategy = SWAP;
+                } else if (!strcmp(argv[i + 1], "TRIPLE_FLIP")) {
+                    strategy = TRIPLE_FLIP;
+                } else if (!strcmp(argv[i + 1], "QUAD_FLIP")) {
+                    strategy = QUAD_FLIP;
+                } else if (!strcmp(argv[i + 1], "DOUBLE_SWAP")) {
+                    strategy = DOUBLE_SWAP;
+                } else if (!strcmp(argv[i + 1], "DOUBLE_SWAP_SWAP")) {
+                    strategy = DOUBLE_SWAP_SWAP;
+                } else if (!strcmp(argv[i + 1], "DOUBLE_FLIP_SWAP")) {
+                    strategy = DOUBLE_FLIP_SWAP;
+                } else {
+                    std::cerr << "Wrong improvement method! Exiting...\n";
+                    return 404;
+                }
+            }
+            else if (!strcmp(argv[i], "-first") ) {
+                return_after_first_improvement = true;
+            }
+    }
 
     std::cout << std::setw(13) << "Instance" << std::setw(13) << "Time 1" << std::setw(17) <<
-              "1st sol."  /*<< std::setw(13) << "Check"*/ << std::setw(19) << "Improved sol."<< std::setw(13) <<
-              "Time 2" /*<< std::setw(13) << "Check"*/ << std::setw(14) << "Relative" << std::endl;
+              "1st sol."  << std::setw(13) << "Check" << std::setw(19) << "Improved sol."<< std::setw(13) <<
+              "Time 2" << std::setw(13) << "Check" << std::setw(14) << "Relative" << std::endl;
 
     std::cout << std::setprecision(4) << std::fixed;
 
     double total_rel_improvement = 0.;
+    int total_construction_time = 0;
+    int total_improvement_time = 0;
 
     for (auto filename: FILES){
         // initialize
@@ -344,6 +601,7 @@ int main(int argc, char **argv) {
             std::vector<int> x(n, -1); //solution, -1 by default means not processed by the algorithm
 
             double time_taken_to_construct = constructionHeuristic(n, m, x, c, a, b);
+            total_construction_time += time_taken_to_construct;
 
             Solution initial_solution;
             for (int i = 0; i < n; ++i)
@@ -353,21 +611,21 @@ int main(int argc, char **argv) {
             Solution improved_solution;
             int new_objective;
             bool improvement_made = localSearch(n, m, initial_solution, c, a, b, improved_solution, new_objective,
-                                                localSearchTime,60000, DOUBLE_FLIP, false);
-
+                                                localSearchTime,60000, strategy, return_after_first_improvement);
+            total_improvement_time += localSearchTime;
             int init_obj = computeSolutionObjective(n, c, initial_solution);
 
 
             std::cout << std::setw(13) << filename.substr(9) << std::setw(10) << (int)time_taken_to_construct << //solution function
-                      " ms" << std::setw(17) << init_obj /*<< std::setw(13) <<
-                      (checkSolutionFeasibility(n,m,x,a,b) ? "feas" : "infeas")*/;
+                      " ms" << std::setw(17) << init_obj << std::setw(13) <<
+                      (checkSolutionFeasibility(n,m,x,a,b) ? "feas" : "infeas");
             if (improvement_made) {
                 int improved_obj = computeSolutionObjective(n, c, improved_solution);
                 double improvement_rel = 100*(improved_obj - init_obj)/(double)init_obj;
                 total_rel_improvement += improvement_rel;
                 std::cout << std::setw(19) << improved_obj << std::setw(13) << std::setw(10) << (int)localSearchTime
-                << " ms" /*<< std::setw(13) <<  (checkSolutionFeasibility(n, m, improved_solution, a, b)
-                ? "feas" : "infeas")*/ << std::setw(12) <<  improvement_rel  << " %" << std::endl;
+                << " ms" << std::setw(13) <<  (checkSolutionFeasibility(n, m, improved_solution, a, b)
+                ? "feas" : "infeas") << std::setw(12) <<  improvement_rel  << " %" << std::endl;
             }
             else    {
                 std::cout << "\t\t Improvement not made " << localSearchTime << " ms\n";
@@ -377,8 +635,9 @@ int main(int argc, char **argv) {
             std::cout<<"Something went wrong! Check file availability!!!";
     }
 
-    std::cout << "\nAverage relative improvement: " << total_rel_improvement/FILES.size() << " %" << std::endl;
-
+    printf("\nAverage relative improvement: %8.4f \%\n", total_rel_improvement/FILES.size());
+    printf("Total time for construction: %5d ms\n", total_construction_time);
+    printf("Total time for improvement:  %5d ms\n", total_improvement_time);
     return 0;
 }
 
