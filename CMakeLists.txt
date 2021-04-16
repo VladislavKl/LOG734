@@ -3,6 +3,8 @@ project(MKP_Heuristics)
 
 set(CMAKE_CXX_STANDARD 17)
 
+
+add_definitions(-DLOG_TO_FILE)
 #add_definitions(-DDEBUG_INFO)
 
 SET(CMAKE_CXX_FLAGS_RELEASE "-O3 -Wall -Wextra")

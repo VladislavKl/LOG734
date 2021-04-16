@@ -12,8 +12,11 @@ const std::vector<std::string> FILES{"100-5-01.txt","100-5-02.txt", "100-5-03.tx
                                      "500-30-01.txt","500-30-02.txt","500-30-03.txt","500-30-04.txt","500-30-05.txt"
 };
 
-const std::vector<int> BEST_IMP_SOL_IN_PREV_YEARS{1,2,3,
-};
+const std::vector<int> BEST_INIT_SOL_IN_PREV_YEARS{24285, 24274, 23317, 23102, 23826, 58697, 58145, 57613, 60425,
+                                                    57643, 114878, 113760, 115625, 113853, 115226};
+
+const std::vector<int> BEST_IMP_SOL_IN_PREV_YEARS{24381, 24274, 23496, 23389, 23991, 59021, 58629, 57868, 60875,
+                                                  57886, 115440, 114246, 116228, 114844, 115928};
 
 const int MAX_PROBLEM_SIZE = 500;
 typedef std::bitset<MAX_PROBLEM_SIZE> Solution;
@@ -551,8 +554,15 @@ int main(int argc, char **argv) {
 
     NEIGHBOURHOOD_OPERATOR strategy = DOUBLE_FLIP;
 
-#ifdef DEBUG_INFO
-    freopen("log.out","w", stdout);
+#ifdef LOG_TO_FILE
+    freopen("log_Improvements.out","a+", stdout);
+    printf("\n\n\n\n");         // spacing between different logs
+
+    for (int i = 0; i < argc; ++i) {
+        printf(argv[i]);
+        printf("  ");
+    }
+    printf("\n\n");
 #endif
 
     if (argc > 1)   {
@@ -580,21 +590,35 @@ int main(int argc, char **argv) {
                 }
             }
             else if (!strcmp(argv[i], "-first") ) {
-                return_after_first_improvement = true;
+                if (!strcmp(argv[i + 1], "true")) {
+                    return_after_first_improvement = true;
+                }
+                else if (!strcmp(argv[i + 1], "false")) {
+                    return_after_first_improvement = true;
+                }
+                else {
+                    std::cerr << "Wrong argument on first improvement! Use either 'true' or 'false'\nExiting...\n";
+                    return 404;
+                }
             }
     }
 
-    std::cout << std::setw(13) << "Instance" << std::setw(13) << "Time 1" << std::setw(17) <<
-              "1st sol."  << std::setw(13) << "Check" << std::setw(19) << "Improved sol."<< std::setw(13) <<
-              "Time 2" << std::setw(13) << "Check" << std::setw(14) << "Relative" << std::endl;
+    std::cout << std::setw(13) << "Instance" << std::setw(13) << "Time 1" << std::setw(12) <<
+              "1st sol."  << std::setw(15) << "Comp." << std::setw(5) << "Feas"  << std::setw(14) << "Improved sol."
+                << std::setw(15) << "Comp."<< std::setw(13) <<
+              "Time 2" << std::setw(5) << "Feas" << std::setw(14) << "Relative" << std::endl;
 
     std::cout << std::setprecision(4) << std::fixed;
 
     double total_rel_improvement = 0.;
     int total_construction_time = 0;
     int total_improvement_time = 0;
-
-    for (auto filename: FILES){
+    int total_best_init_sols = 0;
+    int total_best_imp_sols = 0;
+    double total_comp_improvement = 0.;
+    double total_comp_init = 0.;
+    int problem = 0;
+    for (auto filename: FILES) {
         // initialize
         if (readInstance(filename.insert(0,"../Files/"), c, a, b, n, m, q, opt)) {
 
@@ -614,18 +638,24 @@ int main(int argc, char **argv) {
                                                 localSearchTime,60000, strategy, return_after_first_improvement);
             total_improvement_time += localSearchTime;
             int init_obj = computeSolutionObjective(n, c, initial_solution);
-
-
+            double comp_init = 100*(init_obj - BEST_INIT_SOL_IN_PREV_YEARS[problem])/(double)BEST_INIT_SOL_IN_PREV_YEARS[problem];
+            total_comp_init += comp_init;
+            if (comp_init > 0)
+                total_best_init_sols++;
             std::cout << std::setw(13) << filename.substr(9) << std::setw(10) << (int)time_taken_to_construct << //solution function
-                      " ms" << std::setw(17) << init_obj << std::setw(13) <<
-                      (checkSolutionFeasibility(n,m,x,a,b) ? "feas" : "infeas");
+                      " ms" << std::setw(12) << init_obj << std::setw(13) << comp_init  << " %" << std::setw(5) <<
+                      (checkSolutionFeasibility(n,m,x,a,b) ? "+" : "-");
             if (improvement_made) {
                 int improved_obj = computeSolutionObjective(n, c, improved_solution);
                 double improvement_rel = 100*(improved_obj - init_obj)/(double)init_obj;
                 total_rel_improvement += improvement_rel;
-                std::cout << std::setw(19) << improved_obj << std::setw(13) << std::setw(10) << (int)localSearchTime
-                << " ms" << std::setw(13) <<  (checkSolutionFeasibility(n, m, improved_solution, a, b)
-                ? "feas" : "infeas") << std::setw(12) <<  improvement_rel  << " %" << std::endl;
+                double comp_imp = 100*(improved_obj - BEST_IMP_SOL_IN_PREV_YEARS[problem])/(double)BEST_IMP_SOL_IN_PREV_YEARS[problem];
+                total_comp_improvement += comp_imp;
+                if (comp_imp > 0)
+                    total_best_imp_sols++;
+                std::cout << std::setw(14) << improved_obj << std::setw(13) << comp_imp  << " %" << std::setw(13) << std::setw(10) << (int)localSearchTime
+                << " ms" << std::setw(5) <<  (checkSolutionFeasibility(n, m, improved_solution, a, b)
+                ? "+" : "-") << std::setw(12) <<  improvement_rel  << " %" << std::endl;
             }
             else    {
                 std::cout << "\t\t Improvement not made " << localSearchTime << " ms\n";
@@ -633,11 +663,17 @@ int main(int argc, char **argv) {
         }
         else
             std::cout<<"Something went wrong! Check file availability!!!";
+
+        problem++;
     }
 
     printf("\nAverage relative improvement: %8.4f \%\n", total_rel_improvement/FILES.size());
     printf("Total time for construction: %5d ms\n", total_construction_time);
     printf("Total time for improvement:  %5d ms\n", total_improvement_time);
+
+    printf("\nComparison with previous years:\n");
+    printf("Best initial solutions:  %5d\tAverage improvement: %14.6f \%\n", total_best_init_sols, total_comp_init/(FILES.size()));
+    printf("Best improved solutions: %5d\tAverage improvement: %14.6f \%\n", total_best_imp_sols, total_comp_improvement/(FILES.size()));
     return 0;
 }
 
