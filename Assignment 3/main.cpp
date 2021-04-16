@@ -835,7 +835,7 @@ int main(int argc, char **argv) {
                     total_best_imp_sols++;
                 std::cout << std::setw(14) << improved_obj << std::setw(13) << comp_imp  << " %" << std::setw(13) << std::setw(10) << (int)localSearchTime
                           << " ms" << std::setw(5) <<  (checkSolutionFeasibility(n, m, improved_solution, a, b)
-                                                        ? "+" : "-") << std::setw(12) <<  improvement_rel  << " %" << std::endl;? "feas" : "infeas") << std::setw(12) <<  improvement_rel  << " %" << std::endl;
+                                                        ? "+" : "-") << std::setw(12) <<  improvement_rel  << " %" << std::endl;
             }
             else {
                 std::cout << "\t\t Improvement not made " << localSearchTime << " ms\n";
