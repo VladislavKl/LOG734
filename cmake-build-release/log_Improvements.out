@@ -1,0 +1,707 @@
+
+
+
+
+D:\University\LOG734 Heuristics in Analytics\LOG734\cmake-build-release\Assignment_2.exe  -strategy  FLIP  
+
+     Instance       Time 1    1st sol.          Comp. Feas Improved sol.          Comp.       Time 2 Feas      Relative
+ 100-5-01.txt         1 ms       24049      -0.9718 %    +		 Improvement not made 0.0000 ms
+ 100-5-02.txt         0 ms       23970      -1.2524 %    +		 Improvement not made 0.0000 ms
+ 100-5-03.txt         0 ms       23317       0.0000 %    +		 Improvement not made 0.0000 ms
+ 100-5-04.txt         0 ms       22979      -0.5324 %    +		 Improvement not made 0.0000 ms
+ 100-5-05.txt         0 ms       23826       0.0000 %    +		 Improvement not made 0.0000 ms
+250-10-01.txt         1 ms       58284      -0.7036 %    +		 Improvement not made 0.0000 ms
+250-10-02.txt         1 ms       58293       0.2545 %    +		 Improvement not made 0.0000 ms
+250-10-03.txt         1 ms       57390      -0.3871 %    +		 Improvement not made 0.0000 ms
+250-10-04.txt         3 ms       60467       0.0695 %    +		 Improvement not made 0.0000 ms
+250-10-05.txt         1 ms       57325      -0.5517 %    +		 Improvement not made 0.0000 ms
+500-30-01.txt        16 ms      114839      -0.0339 %    +		 Improvement not made 0.0000 ms
+500-30-02.txt        11 ms      113662      -0.0861 %    +		 Improvement not made 0.0000 ms
+500-30-03.txt        12 ms      115805       0.1557 %    +		 Improvement not made 0.0000 ms
+500-30-04.txt        12 ms      114203       0.3074 %    +		 Improvement not made 0.0000 ms
+500-30-05.txt        26 ms      115471       0.2126 %    +		 Improvement not made 0.0000 ms
+
+Average relative improvement:   0.0000 %
+Total time for construction:    85 ms
+Total time for improvement:      0 ms
+
+Comparison with previous years:
+Best initial solutions:      5	Average improvement:      -0.234618 %
+Best improved solutions:     0	Average improvement:       0.000000 %
+
+
+
+
+D:\University\LOG734 Heuristics in Analytics\LOG734\cmake-build-release\Assignment_2.exe  -strategy  SWAP  
+
+     Instance       Time 1    1st sol.          Comp. Feas Improved sol.          Comp.       Time 2 Feas      Relative
+ 100-5-01.txt         0 ms       24049      -0.9718 %    +		 Improvement not made 0.0000 ms
+ 100-5-02.txt         0 ms       23970      -1.2524 %    +		 Improvement not made 0.0000 ms
+ 100-5-03.txt         0 ms       23317       0.0000 %    +		 Improvement not made 0.0000 ms
+ 100-5-04.txt         0 ms       22979      -0.5324 %    +		 Improvement not made 0.0000 ms
+ 100-5-05.txt         1 ms       23826       0.0000 %    +		 Improvement not made 0.0000 ms
+250-10-01.txt         1 ms       58284      -0.7036 %    +		 Improvement not made 0.0000 ms
+250-10-02.txt         2 ms       58293       0.2545 %    +		 Improvement not made 0.0000 ms
+250-10-03.txt         1 ms       57390      -0.3871 %    +		 Improvement not made 0.0000 ms
+250-10-04.txt         2 ms       60467       0.0695 %    +		 Improvement not made 0.0000 ms
+250-10-05.txt         1 ms       57325      -0.5517 %    +		 Improvement not made 0.0000 ms
+500-30-01.txt        15 ms      114839      -0.0339 %    +		 Improvement not made 0.0000 ms
+500-30-02.txt        10 ms      113662      -0.0861 %    +		 Improvement not made 0.0000 ms
+500-30-03.txt        11 ms      115805       0.1557 %    +		 Improvement not made 0.0000 ms
+500-30-04.txt        20 ms      114203       0.3074 %    +        114234      -0.5312 %         0 ms    +      0.0271 %
+500-30-05.txt        17 ms      115471       0.2126 %    +        115536      -0.3381 %         0 ms    +      0.0563 %
+
+Average relative improvement:   0.0056 %
+Total time for construction:    81 ms
+Total time for improvement:      0 ms
+
+Comparison with previous years:
+Best initial solutions:      5	Average improvement:      -0.234618 %
+Best improved solutions:     0	Average improvement:      -0.057953 %
+
+
+
+
+D:\University\LOG734 Heuristics in Analytics\LOG734\cmake-build-release\Assignment_2.exe  -strategy  DOUBLE_FLIP  
+
+     Instance       Time 1    1st sol.          Comp. Feas Improved sol.          Comp.       Time 2 Feas      Relative
+ 100-5-01.txt         0 ms       24049      -0.9718 %    +         24164      -0.8900 %         0 ms    +      0.4782 %
+ 100-5-02.txt         0 ms       23970      -1.2524 %    +         24225      -0.2019 %         0 ms    +      1.0638 %
+ 100-5-03.txt         0 ms       23317       0.0000 %    +		 Improvement not made 0.0000 ms
+ 100-5-04.txt         0 ms       22979      -0.5324 %    +         23294      -0.4062 %         0 ms    +      1.3708 %
+ 100-5-05.txt         0 ms       23826       0.0000 %    +		 Improvement not made 0.0000 ms
+250-10-01.txt         2 ms       58284      -0.7036 %    +         58711      -0.5252 %         1 ms    +      0.7326 %
+250-10-02.txt         2 ms       58293       0.2545 %    +         58508      -0.2064 %         2 ms    +      0.3688 %
+250-10-03.txt         1 ms       57390      -0.3871 %    +         57710      -0.2730 %         1 ms    +      0.5576 %
+250-10-04.txt         2 ms       60467       0.0695 %    +         60484      -0.6423 %         0 ms    +      0.0281 %
+250-10-05.txt         1 ms       57325      -0.5517 %    +         57667      -0.3783 %         2 ms    +      0.5966 %
+500-30-01.txt        15 ms      114839      -0.0339 %    +        115250      -0.1646 %        11 ms    +      0.3579 %
+500-30-02.txt        11 ms      113662      -0.0861 %    +        114158      -0.0770 %         4 ms    +      0.4364 %
+500-30-03.txt        11 ms      115805       0.1557 %    +        115821      -0.3502 %         4 ms    +      0.0138 %
+500-30-04.txt        12 ms      114203       0.3074 %    +        114543      -0.2621 %         8 ms    +      0.2977 %
+500-30-05.txt        11 ms      115471       0.2126 %    +        115773      -0.1337 %         4 ms    +      0.2615 %
+
+Average relative improvement:   0.4376 %
+Total time for construction:    68 ms
+Total time for improvement:     37 ms
+
+Comparison with previous years:
+Best initial solutions:      5	Average improvement:      -0.234618 %
+Best improved solutions:     0	Average improvement:      -0.300730 %
+
+
+
+
+D:\University\LOG734 Heuristics in Analytics\LOG734\cmake-build-release\Assignment_2.exe  -strategy  DOUBLE_FLIP  -first  true  
+
+     Instance       Time 1    1st sol.          Comp. Feas Improved sol.          Comp.       Time 2 Feas      Relative
+ 100-5-01.txt         0 ms       24049      -0.9718 %    +         24077      -1.2469 %         0 ms    +      0.1164 %
+ 100-5-02.txt         0 ms       23970      -1.2524 %    +         24109      -0.6797 %         0 ms    +      0.5799 %
+ 100-5-03.txt         0 ms       23317       0.0000 %    +		 Improvement not made 1.0000 ms
+ 100-5-04.txt         1 ms       22979      -0.5324 %    +         23125      -1.1287 %         0 ms    +      0.6354 %
+ 100-5-05.txt         1 ms       23826       0.0000 %    +		 Improvement not made 0.0000 ms
+250-10-01.txt         2 ms       58284      -0.7036 %    +         58534      -0.8251 %         2 ms    +      0.4289 %
+250-10-02.txt         1 ms       58293       0.2545 %    +         58508      -0.2064 %         1 ms    +      0.3688 %
+250-10-03.txt         2 ms       57390      -0.3871 %    +         57556      -0.5392 %         0 ms    +      0.2892 %
+250-10-04.txt         1 ms       60467       0.0695 %    +         60484      -0.6423 %         1 ms    +      0.0281 %
+250-10-05.txt         2 ms       57325      -0.5517 %    +         57614      -0.4699 %         0 ms    +      0.5041 %
+500-30-01.txt        17 ms      114839      -0.0339 %    +        115248      -0.1663 %         9 ms    +      0.3562 %
+500-30-02.txt        12 ms      113662      -0.0861 %    +        114015      -0.2022 %         3 ms    +      0.3106 %
+500-30-03.txt        11 ms      115805       0.1557 %    +        115821      -0.3502 %         2 ms    +      0.0138 %
+500-30-04.txt        12 ms      114203       0.3074 %    +        114514      -0.2873 %         5 ms    +      0.2723 %
+500-30-05.txt        11 ms      115471       0.2126 %    +        115743      -0.1596 %         3 ms    +      0.2356 %
+
+Average relative improvement:   0.2760 %
+Total time for construction:    73 ms
+Total time for improvement:     27 ms
+
+Comparison with previous years:
+Best initial solutions:      5	Average improvement:      -0.234618 %
+Best improved solutions:     0	Average improvement:      -0.460255 %
+
+
+
+
+D:\University\LOG734 Heuristics in Analytics\LOG734\cmake-build-release\Assignment_2.exe  -strategy  DOUBLE_SWAP  
+
+     Instance       Time 1    1st sol.          Comp. Feas Improved sol.          Comp.       Time 2 Feas      Relative
+ 100-5-01.txt         0 ms       24049      -0.9718 %    +         24373      -0.0328 %        66 ms    +      1.3472 %
+ 100-5-02.txt         0 ms       23970      -1.2524 %    +         24274       0.0000 %        24 ms    +      1.2683 %
+ 100-5-03.txt         1 ms       23317       0.0000 %    +         23464      -0.1362 %        27 ms    +      0.6304 %
+ 100-5-04.txt         0 ms       22979      -0.5324 %    +         23460       0.3036 %        36 ms    +      2.0932 %
+ 100-5-05.txt         0 ms       23826       0.0000 %    +         23932      -0.2459 %        56 ms    +      0.4449 %
+250-10-01.txt         1 ms       58284      -0.7036 %    +         58921      -0.1694 %      1244 ms    +      1.0929 %
+250-10-02.txt         1 ms       58293       0.2545 %    +         58525      -0.1774 %       753 ms    +      0.3980 %
+250-10-03.txt         2 ms       57390      -0.3871 %    +         57875       0.0121 %      1093 ms    +      0.8451 %
+250-10-04.txt         1 ms       60467       0.0695 %    +         60917       0.0690 %       763 ms    +      0.7442 %
+250-10-05.txt         1 ms       57325      -0.5517 %    +         57936       0.0864 %       995 ms    +      1.0659 %
+500-30-01.txt        15 ms      114839      -0.0339 %    +        115604       0.1421 %     15144 ms    +      0.6662 %
+500-30-02.txt        10 ms      113662      -0.0861 %    +        114366       0.1050 %     10724 ms    +      0.6194 %
+500-30-03.txt        11 ms      115805       0.1557 %    +        116216      -0.0103 %     15181 ms    +      0.3549 %
+500-30-04.txt        12 ms      114203       0.3074 %    +        114908       0.0557 %     15137 ms    +      0.6173 %
+500-30-05.txt        11 ms      115471       0.2126 %    +        115911      -0.0147 %     11237 ms    +      0.3810 %
+
+Average relative improvement:   0.8379 %
+Total time for construction:    66 ms
+Total time for improvement:  72480 ms
+
+Comparison with previous years:
+Best initial solutions:      5	Average improvement:      -0.234618 %
+Best improved solutions:     7	Average improvement:      -0.000859 %
+
+
+
+
+D:\University\LOG734 Heuristics in Analytics\LOG734\cmake-build-release\Assignment_2.exe  -strategy  DOUBLE_SWAP  -first  true  
+
+     Instance       Time 1    1st sol.          Comp. Feas Improved sol.          Comp.       Time 2 Feas      Relative
+ 100-5-01.txt         0 ms       24049      -0.9718 %    +         24329      -0.2133 %        37 ms    +      1.1643 %
+ 100-5-02.txt         1 ms       23970      -1.2524 %    +         24154      -0.4944 %        41 ms    +      0.7676 %
+ 100-5-03.txt         0 ms       23317       0.0000 %    +         23507       0.0468 %        23 ms    +      0.8149 %
+ 100-5-04.txt         0 ms       22979      -0.5324 %    +         23308      -0.3463 %        27 ms    +      1.4317 %
+ 100-5-05.txt         0 ms       23826       0.0000 %    +         23991       0.0000 %        32 ms    +      0.6925 %
+250-10-01.txt         2 ms       58284      -0.7036 %    +         58897      -0.2101 %       828 ms    +      1.0517 %
+250-10-02.txt         1 ms       58293       0.2545 %    +         58415      -0.3650 %       481 ms    +      0.2093 %
+250-10-03.txt         1 ms       57390      -0.3871 %    +         57791      -0.1331 %      1421 ms    +      0.6987 %
+250-10-04.txt         1 ms       60467       0.0695 %    +         60699      -0.2891 %      1457 ms    +      0.3837 %
+250-10-05.txt         2 ms       57325      -0.5517 %    +         57707      -0.3092 %       762 ms    +      0.6664 %
+500-30-01.txt        15 ms      114839      -0.0339 %    +        115212      -0.1975 %      6286 ms    +      0.3248 %
+500-30-02.txt        12 ms      113662      -0.0861 %    +        114259       0.0114 %      7467 ms    +      0.5252 %
+500-30-03.txt        11 ms      115805       0.1557 %    +        116261       0.0284 %     21446 ms    +      0.3938 %
+500-30-04.txt        12 ms      114203       0.3074 %    +        114865       0.0183 %      7838 ms    +      0.5797 %
+500-30-05.txt        10 ms      115471       0.2126 %    +        115714      -0.1846 %      7657 ms    +      0.2104 %
+
+Average relative improvement:   0.6610 %
+Total time for construction:    68 ms
+Total time for improvement:  55803 ms
+
+Comparison with previous years:
+Best initial solutions:      5	Average improvement:      -0.234618 %
+Best improved solutions:     4	Average improvement:      -0.175846 %
+
+
+
+
+D:\University\LOG734 Heuristics in Analytics\LOG734\cmake-build-release\Assignment_2.exe  -strategy  TRIPLE_FLIP  
+
+     Instance       Time 1    1st sol.          Comp. Feas Improved sol.          Comp.       Time 2 Feas      Relative
+ 100-5-01.txt         0 ms       24049      -0.9718 %    +		 Improvement not made 3.0000 ms
+ 100-5-02.txt         1 ms       23970      -1.2524 %    +         24117      -0.6468 %         4 ms    +      0.6133 %
+ 100-5-03.txt         0 ms       23317       0.0000 %    +		 Improvement not made 2.0000 ms
+ 100-5-04.txt         0 ms       22979      -0.5324 %    +         23362      -0.1154 %         9 ms    +      1.6667 %
+ 100-5-05.txt         0 ms       23826       0.0000 %    +		 Improvement not made 3.0000 ms
+250-10-01.txt         2 ms       58284      -0.7036 %    +         58896      -0.2118 %        80 ms    +      1.0500 %
+250-10-02.txt         2 ms       58293       0.2545 %    +         58418      -0.3599 %        83 ms    +      0.2144 %
+250-10-03.txt         1 ms       57390      -0.3871 %    +         57835      -0.0570 %        90 ms    +      0.7754 %
+250-10-04.txt         1 ms       60467       0.0695 %    +		 Improvement not made 40.0000 ms
+250-10-05.txt         1 ms       57325      -0.5517 %    +         57674      -0.3662 %        94 ms    +      0.6088 %
+500-30-01.txt        18 ms      114839      -0.0339 %    +        115350      -0.0780 %      1006 ms    +      0.4450 %
+500-30-02.txt        11 ms      113662      -0.0861 %    +        114270       0.0210 %       628 ms    +      0.5349 %
+500-30-03.txt        13 ms      115805       0.1557 %    +		 Improvement not made 570.0000 ms
+500-30-04.txt        13 ms      114203       0.3074 %    +        114768      -0.0662 %       900 ms    +      0.4947 %
+500-30-05.txt        10 ms      115471       0.2126 %    +        115836      -0.0794 %       796 ms    +      0.3161 %
+
+Average relative improvement:   0.4480 %
+Total time for construction:    73 ms
+Total time for improvement:   4308 ms
+
+Comparison with previous years:
+Best initial solutions:      5	Average improvement:      -0.234618 %
+Best improved solutions:     1	Average improvement:      -0.130644 %
+
+
+
+D:\University\LOG734 Heuristics in Analytics\LOG734\cmake-build-release\Assignment_2.exe  -strategy  TRIPLE_FLIP  -first  true  
+
+     Instance       Time 1    1st sol.          Comp. Feas Improved sol.          Comp.       Time 2 Feas      Relative
+ 100-5-01.txt         0 ms       24049      -0.9718 %    +		 Improvement not made 3.0000 ms
+ 100-5-02.txt         0 ms       23970      -1.2524 %    +         24038      -0.9722 %         7 ms    +      0.2837 %
+ 100-5-03.txt         2 ms       23317       0.0000 %    +		 Improvement not made 2.0000 ms
+ 100-5-04.txt         1 ms       22979      -0.5324 %    +         23139      -1.0689 %         3 ms    +      0.6963 %
+ 100-5-05.txt         0 ms       23826       0.0000 %    +		 Improvement not made 2.0000 ms
+250-10-01.txt         1 ms       58284      -0.7036 %    +         58597      -0.7184 %        39 ms    +      0.5370 %
+250-10-02.txt         1 ms       58293       0.2545 %    +         58461      -0.2865 %       111 ms    +      0.2882 %
+250-10-03.txt         2 ms       57390      -0.3871 %    +         57480      -0.6705 %        48 ms    +      0.1568 %
+250-10-04.txt         1 ms       60467       0.0695 %    +		 Improvement not made 50.0000 ms
+250-10-05.txt         3 ms       57325      -0.5517 %    +         57541      -0.5960 %        67 ms    +      0.3768 %
+500-30-01.txt        15 ms      114839      -0.0339 %    +        114899      -0.4686 %       645 ms    +      0.0522 %
+500-30-02.txt        11 ms      113662      -0.0861 %    +        114033      -0.1864 %       502 ms    +      0.3264 %
+500-30-03.txt        14 ms      115805       0.1557 %    +		 Improvement not made 713.0000 ms
+500-30-04.txt        22 ms      114203       0.3074 %    +        114768      -0.0662 %       613 ms    +      0.4947 %
+500-30-05.txt        18 ms      115471       0.2126 %    +        115683      -0.2113 %       604 ms    +      0.1836 %
+
+Average relative improvement:   0.2264 %
+Total time for construction:    91 ms
+Total time for improvement:   3409 ms
+
+Comparison with previous years:
+Best initial solutions:      5	Average improvement:      -0.234618 %
+Best improved solutions:     0	Average improvement:      -0.349676 %
+
+
+
+
+D:\University\LOG734 Heuristics in Analytics\LOG734\cmake-build-release\Assignment_2.exe  -strategy  QUAD_FLIP  
+
+     Instance       Time 1    1st sol.          Comp. Feas Improved sol.          Comp.       Time 2 Feas      Relative
+ 100-5-01.txt         0 ms       24049      -0.9718 %    +         24373      -0.0328 %       362 ms    +      1.3472 %
+ 100-5-02.txt         1 ms       23970      -1.2524 %    +         24274       0.0000 %       125 ms    +      1.2683 %
+ 100-5-03.txt         0 ms       23317       0.0000 %    +         23464      -0.1362 %       218 ms    +      0.6304 %
+ 100-5-04.txt         0 ms       22979      -0.5324 %    +         23460       0.3036 %       130 ms    +      2.0932 %
+ 100-5-05.txt         1 ms       23826       0.0000 %    +         23932      -0.2459 %       442 ms    +      0.4449 %
+250-10-01.txt         2 ms       58284      -0.7036 %    +         58921      -0.1694 %     10839 ms    +      1.0929 %
+250-10-02.txt         2 ms       58293       0.2545 %    +         58525      -0.1774 %      5029 ms    +      0.3980 %
+250-10-03.txt         2 ms       57390      -0.3871 %    +         57875       0.0121 %      8114 ms    +      0.8451 %
+250-10-04.txt         1 ms       60467       0.0695 %    +         60917       0.0690 %      5493 ms    +      0.7442 %
+250-10-05.txt         1 ms       57325      -0.5517 %    +         57936       0.0864 %      9033 ms    +      1.0659 %
+500-30-01.txt        21 ms      114839      -0.0339 %    +        115234      -0.1784 %     75932 ms    +      0.3440 %
+500-30-02.txt        13 ms      113662      -0.0861 %    +        114366       0.1050 %     84752 ms    +      0.6194 %
+500-30-03.txt        12 ms      115805       0.1557 %    +        116184      -0.0379 %     94263 ms    +      0.3273 %
+500-30-04.txt        12 ms      114203       0.3074 %    +        114875       0.0270 %     92055 ms    +      0.5884 %
+500-30-05.txt        11 ms      115471       0.2126 %    +        115911      -0.0147 %     90429 ms    +      0.3810 %
+
+Average relative improvement:   0.8127 %
+Total time for construction:    79 ms
+Total time for improvement:  477216 ms
+
+Comparison with previous years:
+Best initial solutions:      5	Average improvement:      -0.234618 %
+Best improved solutions:     6	Average improvement:      -0.025977 %
+
+
+
+
+
+
+D:\University\LOG734 Heuristics in Analytics\LOG734\cmake-build-release\Assignment_2.exe  -strategy  QUAD_FLIP  -first  true  
+
+     Instance       Time 1    1st sol.          Comp. Feas Improved sol.          Comp.       Time 2 Feas      Relative
+ 100-5-01.txt         0 ms       24049      -0.9718 %    +         24329      -0.2133 %        23 ms    +      1.1643 %
+ 100-5-02.txt         0 ms       23970      -1.2524 %    +         24096      -0.7333 %        33 ms    +      0.5257 %
+ 100-5-03.txt         0 ms       23317       0.0000 %    +         23420      -0.3235 %        39 ms    +      0.4417 %
+ 100-5-04.txt         0 ms       22979      -0.5324 %    +         23336      -0.2266 %        23 ms    +      1.5536 %
+ 100-5-05.txt         0 ms       23826       0.0000 %    +         23991       0.0000 %        39 ms    +      0.6925 %
+250-10-01.txt         0 ms       58284      -0.7036 %    +         58889      -0.2236 %      1457 ms    +      1.0380 %
+250-10-02.txt         1 ms       58293       0.2545 %    +         58351      -0.4742 %       918 ms    +      0.0995 %
+250-10-03.txt         1 ms       57390      -0.3871 %    +         57828      -0.0691 %       898 ms    +      0.7632 %
+250-10-04.txt         0 ms       60467       0.0695 %    +         60646      -0.3762 %      2174 ms    +      0.2960 %
+250-10-05.txt         1 ms       57325      -0.5517 %    +         57546      -0.5874 %      1450 ms    +      0.3855 %
+500-30-01.txt         5 ms      114839      -0.0339 %    +        115431      -0.0078 %     23806 ms    +      0.5155 %
+500-30-02.txt         3 ms      113662      -0.0861 %    +        114289       0.0376 %     24988 ms    +      0.5516 %
+500-30-03.txt         4 ms      115805       0.1557 %    +        116087      -0.1213 %     21831 ms    +      0.2435 %
+500-30-04.txt         4 ms      114203       0.3074 %    +        114833      -0.0096 %     42067 ms    +      0.5516 %
+500-30-05.txt         4 ms      115471       0.2126 %    +        115969       0.0354 %     28516 ms    +      0.4313 %
+
+Average relative improvement:   0.6169 %
+Total time for construction:    23 ms
+Total time for improvement:  148262 ms
+
+Comparison with previous years:
+Best initial solutions:      5	Average improvement:      -0.234618 %
+Best improved solutions:     2	Average improvement:      -0.219520 %
+
+
+
+
+D:\University\LOG734 Heuristics in Analytics\LOG734\cmake-build-release\Assignment_2.exe  -strategy  DOUBLE_SWAP_SWAP  
+
+     Instance       Time 1    1st sol.          Comp. Feas Improved sol.          Comp.       Time 2 Feas      Relative
+ 100-5-01.txt         0 ms       24049      -0.9718 %    +         24373      -0.0328 %        22 ms    +      1.3472 %
+ 100-5-02.txt         0 ms       23970      -1.2524 %    +         24274       0.0000 %         8 ms    +      1.2683 %
+ 100-5-03.txt         0 ms       23317       0.0000 %    +         23464      -0.1362 %         9 ms    +      0.6304 %
+ 100-5-04.txt         0 ms       22979      -0.5324 %    +         23460       0.3036 %         9 ms    +      2.0932 %
+ 100-5-05.txt         0 ms       23826       0.0000 %    +         23932      -0.2459 %        14 ms    +      0.4449 %
+250-10-01.txt         0 ms       58284      -0.7036 %    +         58921      -0.1694 %       389 ms    +      1.0929 %
+250-10-02.txt         0 ms       58293       0.2545 %    +         58525      -0.1774 %       231 ms    +      0.3980 %
+250-10-03.txt         0 ms       57390      -0.3871 %    +         57875       0.0121 %       334 ms    +      0.8451 %
+250-10-04.txt         0 ms       60467       0.0695 %    +         60917       0.0690 %       223 ms    +      0.7442 %
+250-10-05.txt         1 ms       57325      -0.5517 %    +         57936       0.0864 %       313 ms    +      1.0659 %
+500-30-01.txt         5 ms      114839      -0.0339 %    +        115604       0.1421 %      4766 ms    +      0.6662 %
+500-30-02.txt         3 ms      113662      -0.0861 %    +        114366       0.1050 %      3383 ms    +      0.6194 %
+500-30-03.txt         4 ms      115805       0.1557 %    +        116216      -0.0103 %      4801 ms    +      0.3549 %
+500-30-04.txt         4 ms      114203       0.3074 %    +        114908       0.0557 %      4760 ms    +      0.6173 %
+500-30-05.txt         4 ms      115471       0.2126 %    +        115911      -0.0147 %      3525 ms    +      0.3810 %
+
+Average relative improvement:   0.8379 %
+Total time for construction:    21 ms
+Total time for improvement:  22787 ms
+
+Comparison with previous years:
+Best initial solutions:      5	Average improvement:      -0.234618 %
+Best improved solutions:     7	Average improvement:      -0.000859 %
+
+
+
+
+D:\University\LOG734 Heuristics in Analytics\LOG734\cmake-build-release\Assignment_2.exe  -strategy  DOUBLE_SWAP_SWAP  -first  true  
+
+     Instance       Time 1    1st sol.          Comp. Feas Improved sol.          Comp.       Time 2 Feas      Relative
+ 100-5-01.txt         0 ms       24049      -0.9718 %    +         24329      -0.2133 %        11 ms    +      1.1643 %
+ 100-5-02.txt         0 ms       23970      -1.2524 %    +         24154      -0.4944 %        16 ms    +      0.7676 %
+ 100-5-03.txt         0 ms       23317       0.0000 %    +         23507       0.0468 %        10 ms    +      0.8149 %
+ 100-5-04.txt         0 ms       22979      -0.5324 %    +         23308      -0.3463 %         9 ms    +      1.4317 %
+ 100-5-05.txt         0 ms       23826       0.0000 %    +         23991       0.0000 %         9 ms    +      0.6925 %
+250-10-01.txt         0 ms       58284      -0.7036 %    +         58897      -0.2101 %       254 ms    +      1.0517 %
+250-10-02.txt         1 ms       58293       0.2545 %    +         58415      -0.3650 %       150 ms    +      0.2093 %
+250-10-03.txt         0 ms       57390      -0.3871 %    +         57791      -0.1331 %       428 ms    +      0.6987 %
+250-10-04.txt         0 ms       60467       0.0695 %    +         60699      -0.2891 %       459 ms    +      0.3837 %
+250-10-05.txt         1 ms       57325      -0.5517 %    +         57707      -0.3092 %       238 ms    +      0.6664 %
+500-30-01.txt         5 ms      114839      -0.0339 %    +        115212      -0.1975 %      1830 ms    +      0.3248 %
+500-30-02.txt         4 ms      113662      -0.0861 %    +        114259       0.0114 %      1837 ms    +      0.5252 %
+500-30-03.txt         4 ms      115805       0.1557 %    +        116261       0.0284 %      6740 ms    +      0.3938 %
+500-30-04.txt         4 ms      114203       0.3074 %    +        114865       0.0183 %      2466 ms    +      0.5797 %
+500-30-05.txt         4 ms      115471       0.2126 %    +        115714      -0.1846 %      2416 ms    +      0.2104 %
+
+Average relative improvement:   0.6610 %
+Total time for construction:    23 ms
+Total time for improvement:  16873 ms
+
+Comparison with previous years:
+Best initial solutions:      5	Average improvement:      -0.234618 %
+Best improved solutions:     4	Average improvement:      -0.175846 %
+
+
+
+
+D:\University\LOG734 Heuristics in Analytics\LOG734\cmake-build-release\Assignment_2.exe  -strategy  DOUBLE_FLIP_SWAP  
+
+     Instance       Time 1    1st sol.          Comp. Feas Improved sol.          Comp.       Time 2 Feas      Relative
+ 100-5-01.txt         0 ms       24049      -0.9718 %    +         24164      -0.8900 %         0 ms    +      0.4782 %
+ 100-5-02.txt         0 ms       23970      -1.2524 %    +         24225      -0.2019 %         0 ms    +      1.0638 %
+ 100-5-03.txt         0 ms       23317       0.0000 %    +		 Improvement not made 1.0000 ms
+ 100-5-04.txt         0 ms       22979      -0.5324 %    +         23294      -0.4062 %         0 ms    +      1.3708 %
+ 100-5-05.txt         0 ms       23826       0.0000 %    +		 Improvement not made 0.0000 ms
+250-10-01.txt         0 ms       58284      -0.7036 %    +         58711      -0.5252 %         1 ms    +      0.7326 %
+250-10-02.txt         0 ms       58293       0.2545 %    +         58508      -0.2064 %         1 ms    +      0.3688 %
+250-10-03.txt         0 ms       57390      -0.3871 %    +         57710      -0.2730 %         1 ms    +      0.5576 %
+250-10-04.txt         1 ms       60467       0.0695 %    +         60484      -0.6423 %         0 ms    +      0.0281 %
+250-10-05.txt         0 ms       57325      -0.5517 %    +         57667      -0.3783 %         1 ms    +      0.5966 %
+500-30-01.txt         5 ms      114839      -0.0339 %    +        115250      -0.1646 %         3 ms    +      0.3579 %
+500-30-02.txt         3 ms      113662      -0.0861 %    +        114158      -0.0770 %         1 ms    +      0.4364 %
+500-30-03.txt         4 ms      115805       0.1557 %    +        115821      -0.3502 %         1 ms    +      0.0138 %
+500-30-04.txt         4 ms      114203       0.3074 %    +        114543      -0.2621 %         3 ms    +      0.2977 %
+500-30-05.txt         3 ms      115471       0.2126 %    +        115773      -0.1337 %         1 ms    +      0.2615 %
+
+Average relative improvement:   0.4376 %
+Total time for construction:    20 ms
+Total time for improvement:     14 ms
+
+Comparison with previous years:
+Best initial solutions:      5	Average improvement:      -0.234618 %
+Best improved solutions:     0	Average improvement:      -0.300730 %
+
+
+
+
+D:\University\LOG734 Heuristics in Analytics\LOG734\cmake-build-release\Assignment_2.exe  -strategy  DOUBLE_FLIP_SWAP  -first  true  
+
+     Instance       Time 1    1st sol.          Comp. Feas Improved sol.          Comp.       Time 2 Feas      Relative
+ 100-5-01.txt         0 ms       24049      -0.9718 %    +         24077      -1.2469 %         0 ms    +      0.1164 %
+ 100-5-02.txt         0 ms       23970      -1.2524 %    +         24109      -0.6797 %         0 ms    +      0.5799 %
+ 100-5-03.txt         0 ms       23317       0.0000 %    +		 Improvement not made 0.0000 ms
+ 100-5-04.txt         0 ms       22979      -0.5324 %    +         23125      -1.1287 %         0 ms    +      0.6354 %
+ 100-5-05.txt         0 ms       23826       0.0000 %    +		 Improvement not made 0.0000 ms
+250-10-01.txt         2 ms       58284      -0.7036 %    +         58534      -0.8251 %         0 ms    +      0.4289 %
+250-10-02.txt         0 ms       58293       0.2545 %    +         58508      -0.2064 %         0 ms    +      0.3688 %
+250-10-03.txt         0 ms       57390      -0.3871 %    +         57556      -0.5392 %         0 ms    +      0.2892 %
+250-10-04.txt         0 ms       60467       0.0695 %    +         60484      -0.6423 %         0 ms    +      0.0281 %
+250-10-05.txt         0 ms       57325      -0.5517 %    +         57614      -0.4699 %         2 ms    +      0.5041 %
+500-30-01.txt         4 ms      114839      -0.0339 %    +        115248      -0.1663 %         3 ms    +      0.3562 %
+500-30-02.txt         3 ms      113662      -0.0861 %    +        114015      -0.2022 %         1 ms    +      0.3106 %
+500-30-03.txt         4 ms      115805       0.1557 %    +        115821      -0.3502 %         1 ms    +      0.0138 %
+500-30-04.txt         3 ms      114203       0.3074 %    +        114514      -0.2873 %         2 ms    +      0.2723 %
+500-30-05.txt         3 ms      115471       0.2126 %    +        115743      -0.1596 %         1 ms    +      0.2356 %
+
+Average relative improvement:   0.2760 %
+Total time for construction:    19 ms
+Total time for improvement:     10 ms
+
+Comparison with previous years:
+Best initial solutions:      5	Average improvement:      -0.234618 %
+Best improved solutions:     0	Average improvement:      -0.460255 %
+
+
+
+
+
+
+
+D:\University\LOG734 Heuristics in Analytics\LOG734\cmake-build-release\Assignment_3.exe  -strategy  DOUBLE_FLIP  -time  59  -localtime  5  -grasptime  10  
+
+     Instance       Time 1    1st sol.          Comp. Feas Improved sol.          Comp.       Time 2 Feas      Relative
+
+
+SEED(13)
+
+D:\University\LOG734 Heuristics in Analytics\LOG734\cmake-build-release\Assignment_3.exe  -strategy  DOUBLE_FLIP  -time  59  -localtime  5  -grasptime  10  
+
+     Instance       Time 1    1st sol.          Comp. Feas Improved sol.          Comp.       Time 2 Feas      Relative
+ 100-5-01.txt         0 ms       24164      -0.4982 %    +         23862      -2.1287 %     60000 ms    +     -1.2498 %
+ 100-5-02.txt         0 ms       24225      -0.2019 %    +         24009      -1.0917 %     60000 ms    +     -0.8916 %
+ 100-5-03.txt         0 ms           0    -100.0000 %    +         23305      -1.5670 %     60000 ms    +         inf %
+ 100-5-04.txt         0 ms       23294       0.8311 %    +         23112      -1.7932 %     60000 ms    +     -0.7813 %
+ 100-5-05.txt         0 ms           0    -100.0000 %    +         23660      -1.3797 %     60000 ms    +         inf %
+250-10-01.txt         2 ms       58711       0.0239 %    +         58220      -1.5540 %     60022 ms    +     -0.8363 %
+250-10-02.txt         1 ms       58508       0.6243 %    +         58222      -0.9577 %     60086 ms    +     -0.4888 %
+250-10-03.txt         2 ms       57710       0.1684 %    +         56812      -1.7688 %     60019 ms    +     -1.5561 %
+250-10-04.txt         1 ms       60484       0.0976 %    +         59770      -1.8491 %     60017 ms    +     -1.1805 %
+250-10-05.txt         2 ms       57667       0.0416 %    +         57096      -1.5722 %    351152 ms    +     -0.9902 %
+500-30-01.txt        13 ms      115250       0.3238 %    +        113881      -1.4111 %     60062 ms    +     -1.1879 %
+500-30-02.txt         3 ms      114158       0.3499 %    +        113193      -0.9728 %     60077 ms    +     -0.8453 %
+500-30-03.txt        11 ms      115821       0.1695 %    +        113831      -2.0623 %     60067 ms    +     -1.7182 %
+500-30-04.txt        12 ms      114543       0.6060 %    +        113902      -0.8194 %     60194 ms    +     -0.5596 %
+500-30-05.txt        11 ms      115773       0.4747 %    +        113825      -1.8141 %     60113 ms    +     -1.6826 %
+
+Average relative improvement:      inf %
+Total time for construction:    58 ms
+Total time for improvement:     36 ms
+
+Comparison with previous years:
+Best initial solutions:     11	Average improvement:     -13.132617 %
+Best improved solutions:     0	Average improvement:      -1.516115 %
+
+
+
+
+D:\University\LOG734 Heuristics in Analytics\LOG734\cmake-build-release\Assignment_3.exe  -strategy  DOUBLE_FLIP  -first  true  -time  59  -localtime  5  -grasptime  10  
+
+     Instance       Time 1    1st sol.          Comp. Feas Improved sol.          Comp.       Time 2 Feas      Relative
+ 100-5-01.txt         0 ms       24077      -0.8565 %    +         24204      -0.7260 %     60000 ms    +      0.5275 %
+ 100-5-02.txt         0 ms       24109      -0.6797 %    +         24133      -0.5809 %     60000 ms    +      0.0995 %
+ 100-5-03.txt         0 ms           0    -100.0000 %    +         23331      -1.4572 %     60000 ms    +         inf %
+ 100-5-04.txt         0 ms       23125       0.0996 %    +         23255      -1.1855 %     60000 ms    +      0.5622 %
+ 100-5-05.txt         0 ms           0    -100.0000 %    +             0    -100.0000 %     60000 ms    +         nan %
+250-10-01.txt         2 ms       58534      -0.2777 %    +         58785      -0.5986 %     60006 ms    +      0.4288 %
+250-10-02.txt         1 ms       58508       0.6243 %    +         58106      -1.1551 %     60008 ms    +     -0.6871 %
+250-10-03.txt         1 ms       57556      -0.0989 %    +         57534      -0.5204 %     60007 ms    +     -0.0382 %
+250-10-04.txt         2 ms       60484       0.0976 %    +         60324      -0.9393 %     60007 ms    +     -0.2645 %
+250-10-05.txt         1 ms       57614      -0.0503 %    +         57401      -1.0464 %     60005 ms    +     -0.3697 %
+500-30-01.txt        15 ms      115248       0.3221 %    +        114062      -1.2544 %     60077 ms    +     -1.0291 %
+500-30-02.txt        10 ms      114015       0.2242 %    +        113796      -0.4453 %     60073 ms    +     -0.1921 %
+500-30-03.txt        11 ms      115821       0.1695 %    +        115199      -0.8853 %     60076 ms    +     -0.5370 %
+500-30-04.txt        12 ms      114514       0.5806 %    +        113976      -0.7549 %     60085 ms    +     -0.4698 %
+500-30-05.txt        11 ms      115743       0.4487 %    +        114719      -1.0429 %     60073 ms    +     -0.8847 %
+
+Average relative improvement:      nan %
+Total time for construction:    66 ms
+Total time for improvement:     27 ms
+
+Comparison with previous years:
+Best initial solutions:      8	Average improvement:     -13.293111 %
+Best improved solutions:     0	Average improvement:      -7.506148 %
+
+
+
+
+D:\University\LOG734 Heuristics in Analytics\LOG734\cmake-build-release\Assignment_3.exe  -strategy  DOUBLE_SWAP  -first  true  -time  59  -localtime  5  -grasptime  10  
+
+     Instance       Time 1    1st sol.          Comp. Feas Improved sol.          Comp.       Time 2 Feas      Relative
+ 100-5-01.txt         0 ms       24329       0.1812 %    +         24198      -0.7506 %     60225 ms    +     -0.5385 %
+ 100-5-02.txt         0 ms       24154      -0.4944 %    +         24138      -0.5603 %     60211 ms    +     -0.0662 %
+ 100-5-03.txt         0 ms       23507       0.8149 %    +         23415      -1.1024 %     60078 ms    +     -0.3914 %
+ 100-5-04.txt         0 ms       23308       0.8917 %    +         23489      -0.1912 %     60287 ms    +      0.7766 %
+ 100-5-05.txt         0 ms       23991       0.6925 %    +         23991       0.0000 %     60177 ms    +      0.0000 %
+250-10-01.txt         1 ms       58897       0.3407 %    +         58949      -0.3213 %     65389 ms    +      0.0883 %
+250-10-02.txt         2 ms       58415       0.4644 %    +         58453      -0.5648 %     65211 ms    +      0.0651 %
+250-10-03.txt         2 ms       57791       0.3090 %    +         57861       0.0450 %     64758 ms    +      0.1211 %
+250-10-04.txt         1 ms       60699       0.4535 %    +         60557      -0.5567 %     66262 ms    +     -0.2339 %
+250-10-05.txt         2 ms       57707       0.1110 %    +         57509      -0.8602 %     62583 ms    +     -0.3431 %
+500-30-01.txt        15 ms      115212       0.2907 %    +        115103      -0.3532 %     63081 ms    +     -0.0946 %
+500-30-02.txt        10 ms      114259       0.4386 %    +        113962      -0.3001 %     61085 ms    +     -0.2599 %
+500-30-03.txt        11 ms      116261       0.5501 %    +        115756      -0.4061 %     65965 ms    +     -0.4344 %
+500-30-04.txt        12 ms      114865       0.8889 %    +        114491      -0.3065 %     67368 ms    +     -0.3256 %
+500-30-05.txt        18 ms      115714       0.4235 %    +        115661      -0.2303 %     66147 ms    +     -0.0458 %
+
+Average relative improvement:  -0.1122 %
+Total time for construction:    74 ms
+Total time for improvement:  55063 ms
+
+Comparison with previous years:
+Best initial solutions:     14	Average improvement:       0.423750 %
+Best improved solutions:     1	Average improvement:      -0.430577 %
+
+
+
+
+D:\University\LOG734 Heuristics in Analytics\LOG734\cmake-build-release\Assignment_3.exe  -strategy  QUAD_FLIP  -first  true  -time  59  -localtime  15  -grasptime  10  
+
+     Instance       Time 1    1st sol.          Comp. Feas Improved sol.          Comp.       Time 2 Feas      Relative
+ 100-5-01.txt         0 ms       24329       0.1812 %    +         24337      -0.1805 %     60840 ms    +      0.0329 %
+ 100-5-02.txt         0 ms       24096      -0.7333 %    +         24138      -0.5603 %     60780 ms    +      0.1743 %
+ 100-5-03.txt         0 ms       23420       0.4417 %    +         23415      -1.1024 %     60507 ms    +     -0.0213 %
+ 100-5-04.txt         0 ms       23336       1.0129 %    +         23402      -0.5609 %     60493 ms    +      0.2828 %
+ 100-5-05.txt         1 ms       23991       0.6925 %    +         23991       0.0000 %     60755 ms    +      0.0000 %
+250-10-01.txt         1 ms       58889       0.3271 %    +         58853      -0.4836 %     65793 ms    +     -0.0611 %
+250-10-02.txt         1 ms       58351       0.3543 %    +         58453      -0.5648 %     69879 ms    +      0.1748 %
+250-10-03.txt         1 ms       57828       0.3732 %    +         57823      -0.0207 %     64109 ms    +     -0.0086 %
+250-10-04.txt         1 ms       60646       0.3657 %    +         60632      -0.4335 %     68128 ms    +     -0.0231 %
+250-10-05.txt         1 ms       57546      -0.1683 %    +         57758      -0.4310 %     60888 ms    +      0.3684 %
+500-30-01.txt        15 ms      115431       0.4814 %    +        115200      -0.2692 %     79275 ms    +     -0.2001 %
+500-30-02.txt        11 ms      114289       0.4650 %    +        114061      -0.2135 %    111258 ms    +     -0.1995 %
+500-30-03.txt        12 ms      116087       0.3996 %    +        115379      -0.7305 %     70247 ms    +     -0.6099 %
+500-30-04.txt        12 ms      114833       0.8608 %    +        114368      -0.4136 %     59949 ms    +     -0.4049 %
+500-30-05.txt        10 ms      115969       0.6448 %    +        115129      -0.6892 %     78382 ms    +     -0.7243 %
+
+Average relative improvement:  -0.0813 %
+Total time for construction:    66 ms
+Total time for improvement:  474352 ms
+
+Comparison with previous years:
+Best initial solutions:     13	Average improvement:       0.379908 %
+Best improved solutions:     0	Average improvement:      -0.443575 %
+
+
+
+
+
+
+D:\University\LOG734 Heuristics in Analytics\LOG734\cmake-build-release\Assignment_3.exe  -strategy  QUAD_FLIP  -first  true  -time  59  -localtime  15  -grasptime  30  
+
+     Instance       Time 1    1st sol.          Comp. Feas Improved sol.          Comp.       Time 2 Feas      Relative
+ 100-5-01.txt         0 ms       24329       0.1812 %    +         24329      -0.2133 %     60092 ms    +      0.0000 %
+ 100-5-02.txt         0 ms       24096      -0.7333 %    +         24138      -0.5603 %     60070 ms    +      0.1743 %
+ 100-5-03.txt         0 ms       23420       0.4417 %    +         23337      -1.4318 %     60048 ms    +     -0.3544 %
+ 100-5-04.txt         1 ms       23336       1.0129 %    +         23364      -0.7224 %     60052 ms    +      0.1200 %
+ 100-5-05.txt         0 ms       23991       0.6925 %    +         23991       0.0000 %     60080 ms    +      0.0000 %
+250-10-01.txt         1 ms       58889       0.3271 %    +         58861      -0.4701 %     63799 ms    +     -0.0475 %
+250-10-02.txt         1 ms       58351       0.3543 %    +         58302      -0.8216 %     62171 ms    +     -0.0840 %
+250-10-03.txt         1 ms       57828       0.3732 %    +         57837       0.0035 %     63088 ms    +      0.0156 %
+250-10-04.txt         1 ms       60646       0.3657 %    +         60593      -0.4976 %     62014 ms    +     -0.0874 %
+250-10-05.txt         1 ms       57546      -0.1683 %    +         57758      -0.4310 %     62928 ms    +      0.3684 %
+500-30-01.txt         5 ms      115431       0.4814 %    +        115368      -0.1238 %     92537 ms    +     -0.0546 %
+500-30-02.txt         4 ms      114289       0.4650 %    +        113695      -0.5337 %     99763 ms    +     -0.5197 %
+500-30-03.txt         4 ms      116087       0.3996 %    +        115978      -0.2151 %    100384 ms    +     -0.0939 %
+500-30-04.txt         4 ms      114833       0.8608 %    +        114483      -0.3135 %    108555 ms    +     -0.3048 %
+500-30-05.txt         4 ms      115969       0.6448 %    +        115711      -0.1872 %    108237 ms    +     -0.2225 %
+
+Average relative improvement:  -0.0727 %
+Total time for construction:    27 ms
+Total time for improvement:  150869 ms
+
+Comparison with previous years:
+Best initial solutions:     13	Average improvement:       0.379908 %
+Best improved solutions:     1	Average improvement:      -0.434517 %
+
+
+
+
+
+# L2 MEASURE
+
+
+D:\University\LOG734 Heuristics in Analytics\LOG734\cmake-build-release\Assignment_2.exe  -strategy  DOUBLE_FLIP  
+
+     Instance       Time 1    1st sol.          Comp. Feas Improved sol.          Comp.       Time 2 Feas      Relative
+ 100-5-01.txt         0 ms       23974      -1.2806 %    +         24143      -0.9762 %         0 ms    +      0.7049 %
+ 100-5-02.txt         1 ms       24274       0.0000 %    +		 Improvement not made 0.0000 ms
+ 100-5-03.txt         0 ms       23278      -0.1673 %    +         23343      -0.6512 %         0 ms    +      0.2792 %
+ 100-5-04.txt         0 ms       22893      -0.9047 %    +         23040      -1.4922 %         0 ms    +      0.6421 %
+ 100-5-05.txt         0 ms       23792      -0.1427 %    +		 Improvement not made 0.0000 ms
+250-10-01.txt         0 ms       58229      -0.7973 %    +         58501      -0.8810 %         1 ms    +      0.4671 %
+250-10-02.txt         1 ms       58145       0.0000 %    +		 Improvement not made 0.0000 ms
+250-10-03.txt         0 ms       57267      -0.6006 %    +         57408      -0.7949 %         1 ms    +      0.2462 %
+250-10-04.txt         1 ms       60241      -0.3045 %    +		 Improvement not made 0.0000 ms
+250-10-05.txt         1 ms       57260      -0.6644 %    +         57431      -0.7860 %         0 ms    +      0.2986 %
+500-30-01.txt         4 ms      114878       0.0000 %    +        115038      -0.3482 %         2 ms    +      0.1393 %
+500-30-02.txt         4 ms      113760       0.0000 %    +        114038      -0.1821 %         1 ms    +      0.2444 %
+500-30-03.txt         3 ms      115340      -0.2465 %    +        115576      -0.5610 %         2 ms    +      0.2046 %
+500-30-04.txt         4 ms      113807      -0.0404 %    +        114005      -0.7306 %         1 ms    +      0.1740 %
+500-30-05.txt         3 ms      115226       0.0000 %    +        115532      -0.3416 %         2 ms    +      0.2656 %
+
+Average relative improvement:   0.2444 %
+Total time for construction:    22 ms
+Total time for improvement:     10 ms
+
+Comparison with previous years:
+Best initial solutions:      0	Average improvement:      -0.343265 %
+Best improved solutions:     0	Average improvement:      -0.516326 %
+
+
+
+
+D:\University\LOG734 Heuristics in Analytics\LOG734\cmake-build-release\Assignment_2.exe  -strategy  DOUBLE_SWAP  
+
+     Instance       Time 1    1st sol.          Comp. Feas Improved sol.          Comp.       Time 2 Feas      Relative
+ 100-5-01.txt         0 ms       23974      -1.2806 %    +         24381       0.0000 %         9 ms    +      1.6977 %
+ 100-5-02.txt         0 ms       24274       0.0000 %    +		 Improvement not made 4.0000 ms
+ 100-5-03.txt         1 ms       23278      -0.1673 %    +         23494      -0.0085 %         9 ms    +      0.9279 %
+ 100-5-04.txt         0 ms       22893      -0.9047 %    +         23338      -0.2181 %        10 ms    +      1.9438 %
+ 100-5-05.txt         0 ms       23792      -0.1427 %    +         23959      -0.1334 %        12 ms    +      0.7019 %
+250-10-01.txt         0 ms       58229      -0.7973 %    +         58611      -0.6947 %       302 ms    +      0.6560 %
+250-10-02.txt         1 ms       58145       0.0000 %    +         58346      -0.4827 %       237 ms    +      0.3457 %
+250-10-03.txt         0 ms       57267      -0.6006 %    +         57511      -0.6169 %       197 ms    +      0.4261 %
+250-10-04.txt         0 ms       60241      -0.3045 %    +         60319      -0.9133 %       219 ms    +      0.1295 %
+250-10-05.txt         0 ms       57260      -0.6644 %    +         57712      -0.3006 %       468 ms    +      0.7894 %
+500-30-01.txt         4 ms      114878       0.0000 %    +        115257      -0.1585 %      6071 ms    +      0.3299 %
+500-30-02.txt         3 ms      113760       0.0000 %    +        114063      -0.1602 %      3300 ms    +      0.2664 %
+500-30-03.txt         3 ms      115340      -0.2465 %    +        115663      -0.4861 %      5413 ms    +      0.2800 %
+500-30-04.txt         3 ms      113807      -0.0404 %    +        114337      -0.4415 %      4283 ms    +      0.4657 %
+500-30-05.txt         4 ms      115226       0.0000 %    +        115700      -0.1967 %      3280 ms    +      0.4114 %
+
+Average relative improvement:   0.6248 %
+Total time for construction:    19 ms
+Total time for improvement:  23814 ms
+
+Comparison with previous years:
+Best initial solutions:      0	Average improvement:      -0.343265 %
+Best improved solutions:     0	Average improvement:      -0.320742 %
+
+
+
+
+D:\University\LOG734 Heuristics in Analytics\LOG734\cmake-build-release\Assignment_2.exe  -strategy  QUAD_FLIP  
+
+     Instance       Time 1    1st sol.          Comp. Feas Improved sol.          Comp.       Time 2 Feas      Relative
+ 100-5-01.txt         0 ms       23974      -1.2806 %    +         24381       0.0000 %        40 ms    +      1.6977 %
+ 100-5-02.txt         0 ms       24274       0.0000 %    +		 Improvement not made 21.0000 ms
+ 100-5-03.txt         0 ms       23278      -0.1673 %    +         23494      -0.0085 %        66 ms    +      0.9279 %
+ 100-5-04.txt         0 ms       22893      -0.9047 %    +         23338      -0.2181 %        64 ms    +      1.9438 %
+ 100-5-05.txt         0 ms       23792      -0.1427 %    +         23959      -0.1334 %        62 ms    +      0.7019 %
+250-10-01.txt         0 ms       58229      -0.7973 %    +         58611      -0.6947 %      2760 ms    +      0.6560 %
+250-10-02.txt         1 ms       58145       0.0000 %    +         58346      -0.4827 %      1649 ms    +      0.3457 %
+250-10-03.txt         1 ms       57267      -0.6006 %    +         57511      -0.6169 %      1557 ms    +      0.4261 %
+250-10-04.txt         0 ms       60241      -0.3045 %    +         60319      -0.9133 %      1712 ms    +      0.1295 %
+250-10-05.txt         1 ms       57260      -0.6644 %    +         57712      -0.3006 %      4212 ms    +      0.7894 %
+500-30-01.txt         4 ms      114878       0.0000 %    +        115257      -0.1585 %     66140 ms    +      0.3299 %
+500-30-02.txt         3 ms      113760       0.0000 %    +        114063      -0.1602 %     41269 ms    +      0.2664 %
+500-30-03.txt         4 ms      115340      -0.2465 %    +        115663      -0.4861 %     69719 ms    +      0.2800 %
+500-30-04.txt         4 ms      113807      -0.0404 %    +        114337      -0.4415 %     57331 ms    +      0.4657 %
+500-30-05.txt         4 ms      115226       0.0000 %    +        115700      -0.1967 %     40027 ms    +      0.4114 %
+
+Average relative improvement:   0.6248 %
+Total time for construction:    22 ms
+Total time for improvement:  286629 ms
+
+Comparison with previous years:
+Best initial solutions:      0	Average improvement:      -0.343265 %
+Best improved solutions:     0	Average improvement:      -0.320742 %
+
+
+
+
+D:\University\LOG734 Heuristics in Analytics\LOG734\cmake-build-release\Assignment_3.exe  -strategy  QUAD_FLIP  -first  true  -time  59  -localtime  25  -grasptime  30  
+
+     Instance       Time 1    1st sol.          Comp. Feas Improved sol.          Comp.       Time 2 Feas      Relative
+ 100-5-01.txt         0 ms       24049      -0.9718 %    +         24205      -0.7219 %     60068 ms    +      0.6487 %
+ 100-5-02.txt         0 ms       23970      -1.2524 %    +         24149      -0.5150 %     60079 ms    +      0.7468 %
+ 100-5-03.txt         0 ms       23317       0.0000 %    +         23437      -1.0095 %     60048 ms    +      0.5146 %
+ 100-5-04.txt         0 ms       22979      -0.5324 %    +         23402      -0.5609 %     60046 ms    +      1.8408 %
+ 100-5-05.txt         0 ms       23826       0.0000 %    +         23991       0.0000 %     60079 ms    +      0.6925 %
+250-10-01.txt         0 ms       58284      -0.7036 %    +         58981      -0.2672 %     62584 ms    +      1.1959 %
+250-10-02.txt         1 ms       58293       0.2545 %    +         58426      -0.6107 %     64301 ms    +      0.2282 %
+250-10-03.txt         1 ms       57390      -0.3871 %    +         57986       0.2611 %     63413 ms    +      1.0385 %
+250-10-04.txt         0 ms       60467       0.0695 %    +         60646      -0.4105 %     61947 ms    +      0.2960 %
+250-10-05.txt         0 ms       57325      -0.5517 %    +         57879      -0.2224 %     63210 ms    +      0.9664 %
+500-30-01.txt         5 ms      114839      -0.0339 %    +        115228      -0.2450 %     67359 ms    +      0.3387 %
+500-30-02.txt         3 ms      113662      -0.0861 %    +        114013      -0.2555 %     63043 ms    +      0.3088 %
+500-30-03.txt         4 ms      115805       0.1557 %    +        115880      -0.2994 %    100656 ms    +      0.0648 %
+500-30-04.txt         4 ms      114203       0.3074 %    +        114637      -0.1794 %     63188 ms    +      0.3800 %
+500-30-05.txt         4 ms      115471       0.2126 %    +        115653      -0.2372 %     63234 ms    +      0.1576 %
+
+Average relative improvement:   0.6279 %
+Total time for construction:    22 ms
+Total time for improvement:  973255 ms
+
+Comparison with previous years:
+Best initial solutions:      5	Average improvement:      -0.234618 %
+Best improved solutions:     1	Average improvement:      -0.351556 %
