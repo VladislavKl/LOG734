@@ -276,6 +276,10 @@ bool explore_swap_neighbourhood(const int &n, const int &m,  int init_objective,
             if (x.test(j))            // second should be zero
                 continue;
             if ((current_objective = objective_after_first_flip + c[j]) > neighbour_objective) {
+
+#ifdef DEBUG_INFO
+                printf("Poss imp: swap %d: %d and %d: %d \t\n", i, x.test(i), j, x.test(j));
+#endif
                 if (checkSolutionFeasibilityAfterPerturbing(n, m, x, a, b, row_activity, i, j)) {
                     neighbour = x;
 #ifdef DEBUG_INFO
@@ -366,7 +370,7 @@ bool yieldNeighbour(const int &n, const int &m,  const Solution& x,
             }
             if (N_operator == DOUBLE_FLIP_SWAP) {
                 computeSolutionRowActivities(n, m, neighbour, a, b, row_activity);
-                explore_swap_neighbourhood(m, m, neighbour_objective, row_activity, neighbour_found,
+                explore_swap_neighbourhood(n, m, neighbour_objective, row_activity, neighbour_found,
                                            neighbour, c, a,
                                            b, neighbour,
                                            neighbour_objective, return_after_first_improvement);
@@ -451,7 +455,7 @@ bool yieldNeighbour(const int &n, const int &m,  const Solution& x,
         }
 
         case SWAP: {
-            explore_swap_neighbourhood(m, m, init_objective, row_activity, neighbour_found, x, c, a,
+            explore_swap_neighbourhood(n, m, init_objective, row_activity, neighbour_found, x, c, a,
                                        b, neighbour,
                                        neighbour_objective, return_after_first_improvement);
             break;
@@ -502,7 +506,7 @@ bool yieldNeighbour(const int &n, const int &m,  const Solution& x,
                 printf("Starting additional swap...\n");
 #endif
                 computeSolutionRowActivities(n, m, neighbour, a, b, row_activity);
-                explore_swap_neighbourhood(m, m, neighbour_objective, row_activity, neighbour_found,
+                explore_swap_neighbourhood(n, m, neighbour_objective, row_activity, neighbour_found,
                                            neighbour, c, a,
                                            b, neighbour,
                                            neighbour_objective, return_after_first_improvement);
