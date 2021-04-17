@@ -379,7 +379,7 @@ bool yieldNeighbour(const int &n, const int &m,  const Solution& x,
             }
             if (N_operator == DOUBLE_FLIP_SWAP) {
                 computeSolutionRowActivities(n, m, neighbour, a, b, row_activity);
-                explore_swap_neighbourhood(m, m, neighbour_objective, row_activity, neighbour_found,
+                explore_swap_neighbourhood(n, m, neighbour_objective, row_activity, neighbour_found,
                                            neighbour, c, a,
                                            b, neighbour,
                                            neighbour_objective, return_after_first_improvement);
@@ -464,7 +464,7 @@ bool yieldNeighbour(const int &n, const int &m,  const Solution& x,
         }
 
         case SWAP: {
-            explore_swap_neighbourhood(m, m, init_objective, row_activity, neighbour_found, x, c, a,
+            explore_swap_neighbourhood(n, m, init_objective, row_activity, neighbour_found, x, c, a,
                                        b, neighbour,
                                        neighbour_objective, return_after_first_improvement);
             break;
@@ -515,7 +515,7 @@ bool yieldNeighbour(const int &n, const int &m,  const Solution& x,
                 printf("Starting additional swap...\n");
 #endif
                 computeSolutionRowActivities(n, m, neighbour, a, b, row_activity);
-                explore_swap_neighbourhood(m, m, neighbour_objective, row_activity, neighbour_found,
+                explore_swap_neighbourhood(n, m, neighbour_objective, row_activity, neighbour_found,
                                            neighbour, c, a,
                                            b, neighbour,
                                            neighbour_objective, return_after_first_improvement);
@@ -669,6 +669,7 @@ void GRASP(const int &n, const int &m, Solution& x, std::vector<int>& c,
 }
 
 //void alphaGrasp(const int &n, const int &m, std::vector<int>& x, std::vector<int>& c,
+//                std::vector<std::vector<int>> &a, std::vector<int>& b, double alpha, int seconds) {
 //                std::vector<std::vector<int>> &a, std::vector<int>& b, double alpha, int seconds) {
 //    auto start = clock();
 //
